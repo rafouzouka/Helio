@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 using Helio.Actors;
 using Helio.Components;
-using Helio.Core;
-using System.Diagnostics;
 
 namespace Helio.Graphics
 {
@@ -28,9 +26,8 @@ namespace Helio.Graphics
 
         public override void Update(GameTime gameTime)
         {
-            /*
-            _spriteRect.X = _transform.position.x;
-            _spriteRect.Y = _transform.position.y;*/
+            _spriteRect.X = (int)_transform.position.X;
+            _spriteRect.Y = (int)_transform.position.Y;
         }
 
         public void Draw(GameTime gameTime, Renderer renderer)

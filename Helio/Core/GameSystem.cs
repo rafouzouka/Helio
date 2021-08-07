@@ -18,7 +18,13 @@ namespace Helio.Core
 
         public virtual void LoadContent(ContentManager contentManager) { }
 
-        public virtual void Start() { }
+        public virtual void Start()
+        {
+            foreach (KeyValuePair<ActorId, Actor> actor in _actors)
+            {
+                actor.Value.Start();
+            }
+        }
 
         public virtual void Update(GameTime gameTime)
         {

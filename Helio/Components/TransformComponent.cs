@@ -9,6 +9,8 @@ namespace Helio.Components
         public Vector3 rotation = new Vector3(0, 0, 0);
         public Vector3 scale = new Vector3(0, 0, 0);
 
+        public TransformComponent() { }
+
         public override void Update(GameTime gameTime)
         {
         }

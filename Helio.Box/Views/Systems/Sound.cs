@@ -2,7 +2,7 @@
 
 namespace Helio.Box.Systems
 {
-    class SoundSystem : GameSystem
+    class Sound : GameSystem
     {
 
     }

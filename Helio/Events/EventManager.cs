@@ -42,9 +42,12 @@ namespace Helio.Events
 
         public void TriggerEvent(Event evnt)
         {
-            foreach (Action<Event> listener in _eventListenerMap[evnt.GetType()])
+            if (_eventListenerMap.ContainsKey(evnt.GetType()) == true) 
             {
-                listener.Invoke(evnt);
+                foreach (Action<Event> listener in _eventListenerMap[evnt.GetType()])
+                {
+                    listener.Invoke(evnt);
+                }
             }
         }
 

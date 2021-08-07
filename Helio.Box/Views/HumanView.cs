@@ -7,9 +7,9 @@ namespace Helio.Box.Views
     {
         public HumanView()
         {
-            _systems.Add(new RenderSystem());
-            _systems.Add(new SoundSystem());
-            _systems.Add(new PlayerControlSystem());
+            _systems.Add(new Render());
+            _systems.Add(new Sound());
+            _systems.Add(new PlayerControl());
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Helio
         private Renderer _renderer;
         private Window _window;
 
-        public ILogic gameLogic;
+        public Logic gameLogic;
         public List<View> views;
         public Input input;
 
@@ -51,6 +51,8 @@ namespace Helio
         sealed protected override void LoadContent()
         {
             _renderer = new Renderer(new SpriteBatch(GraphicsDevice));
+
+            gameLogic.LoadContent(Content);
 
             foreach (View view in views)
             {
