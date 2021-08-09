@@ -18,6 +18,7 @@ namespace Helio.Core
             _graphics.IsFullScreen = false;
             _graphics.PreferredBackBufferWidth = 1280;
             _graphics.PreferredBackBufferHeight = 720;
+            _gameWindow.AllowUserResizing = true;
             _graphics.ApplyChanges();
         }
     }

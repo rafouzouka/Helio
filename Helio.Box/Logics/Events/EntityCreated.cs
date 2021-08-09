@@ -12,13 +12,13 @@ namespace Helio.Box.Logics.Events
     {
         public ActorId id;
         public EntityType type;
-        public Vector3 pos;
+        public Rectangle rect;
 
-        public EntityCreated(ActorId id, EntityType type, Vector3 pos)
+        public EntityCreated(ActorId id, EntityType type, Rectangle rect)
         {
             this.id = id;
             this.type = type;
-            this.pos = pos;
+            this.rect = rect;
         }
     }
 }

@@ -7,11 +7,11 @@ namespace Helio.Core
 {
     public abstract class GameSystem
     {
-        protected Dictionary<ActorId, Actor> _actors;
+       // protected Dictionary<ActorId, Actor> _actors;
 
         public GameSystem()
         {
-            _actors = new Dictionary<ActorId, Actor>();
+           // _actors = new Dictionary<ActorId, Actor>();
         }
 
         public virtual void Init() { }
@@ -20,18 +20,18 @@ namespace Helio.Core
 
         public virtual void Start()
         {
-            foreach (KeyValuePair<ActorId, Actor> actor in _actors)
+/*            foreach (KeyValuePair<ActorId, Actor> actor in _actors)
             {
                 actor.Value.Start();
-            }
+            }*/
         }
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (KeyValuePair<ActorId, Actor> actor in _actors)
+/*            foreach (KeyValuePair<ActorId, Actor> actor in _actors)
             {
                 actor.Value.Update(gameTime);
-            }
+            }*/
         }
     }
 }

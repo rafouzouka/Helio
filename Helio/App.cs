@@ -14,6 +14,7 @@ namespace Helio
     {
         private Renderer _renderer;
         private Window _window;
+        private Screen _screen;
 
         public Logic gameLogic;
         public List<View> views;
@@ -50,7 +51,9 @@ namespace Helio
 
         sealed protected override void LoadContent()
         {
-            _renderer = new Renderer(new SpriteBatch(GraphicsDevice));
+            SpriteBatch spriteBatch = new SpriteBatch(GraphicsDevice);
+            _renderer = new Renderer(spriteBatch);
+            _screen = new Screen(spriteBatch, GraphicsDevice, 640, 360);
 
             gameLogic.LoadContent(Content);
 
@@ -91,6 +94,7 @@ namespace Helio
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //_screen.Set();
             _renderer.Begin();
 
             foreach (View view in views)
@@ -99,6 +103,9 @@ namespace Helio
             }
 
             _renderer.End();
+
+            //_screen.Unset();
+            //_screen.Present();
 
             base.Draw(gameTime);
         }
