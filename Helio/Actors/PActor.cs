@@ -5,28 +5,28 @@ using System.Diagnostics;
 
 namespace Helio.Actors
 {
-    public struct ActorId
+    public struct PActorId
     {
         public ulong id;
     
-        public ActorId(ulong id)
+        public PActorId(ulong id)
         {
             this.id = id;
         }
     }
 
-    public class Actor
+    public class PActor
     {
-        private ActorId _id;
+        private PActorId _id;
         private Dictionary<Type, Component> _components;
 
-        public Actor(ActorId id)
+        public PActor(PActorId id)
         {
             _id = id;
             _components = new Dictionary<Type, Component>();
         }
 
-        public ActorId GetId()
+        public PActorId GetId()
         {
             return _id;
         }

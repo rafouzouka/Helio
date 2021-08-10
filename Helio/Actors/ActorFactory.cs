@@ -8,12 +8,12 @@ namespace Helio.Actors
     {
         private static ulong _lastActorId = 0;
  
-        public static Actor CreateEmptyActor()
+        public static PActor CreateEmptyActor()
         {
-            ActorId actorId;
+            PActorId actorId;
             actorId.id = _lastActorId;
             _lastActorId++;
-            return new Actor(actorId);
+            return new PActor(actorId);
         }
     }
 }

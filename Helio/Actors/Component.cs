@@ -9,9 +9,9 @@ namespace Helio.Actors
 
     public abstract class Component
     {
-        protected Actor owner;
+        protected PActor owner;
 
-        public void SetOwner(Actor owner)
+        public void SetOwner(PActor owner)
         {
             this.owner = owner;
         }

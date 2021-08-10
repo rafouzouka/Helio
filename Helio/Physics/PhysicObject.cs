@@ -1,4 +1,5 @@
 ﻿using Helio.Actors;
+using Helio.Core;
 using Helio.Events;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
@@ -7,7 +8,7 @@ namespace Helio.Physics
 {
     public class PhysicObject
     {
-        private ActorId _actorId;
+        private Entity _id;
 
         private Vector2 _position;
         private Vector2 _velocity;
@@ -18,9 +19,9 @@ namespace Helio.Physics
         private IImpulseBehaviour _impulseBehaviour;
         private IForceBehaviour _forceBehaviour;
 
-        public PhysicObject(ActorId actorId, Rectangle collider, float mass, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour)
+        public PhysicObject(Entity id, Rectangle collider, float mass, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour)
         {
-            _actorId = actorId;
+            _id = id;
 
             _position = new Vector2(collider.X, collider.Y);
             _velocity = new Vector2(0, 0);
@@ -68,7 +69,7 @@ namespace Helio.Physics
                 _velocity += _acceleration * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
                 _position += _velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                EventManager.Instance.QueueEvent(new ActorPhysicMoved(_actorId, _position));
+                EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _position));
             }
         }
 

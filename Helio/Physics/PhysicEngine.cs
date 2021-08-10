@@ -8,24 +8,24 @@ namespace Helio.Physics
 {
     public class PhysicEngine : GameSystem
     {
-        private Dictionary<ActorId, PhysicObject> _objects;
+        private Dictionary<Entity, PhysicObject> _objects;
 
         public PhysicEngine()
         {
-            _objects = new Dictionary<ActorId, PhysicObject>();
+            _objects = new Dictionary<Entity, PhysicObject>();
         }
 
-        public void AddPhysicObject(ActorId id, PhysicObject obj)
+        public void AddPhysicObject(Entity id, PhysicObject obj)
         {
             _objects.Add(id, obj);
         }
 
-        public void RemovePhysicObject(ActorId id, PhysicObject obj)
+        public void RemovePhysicObject(Entity id, PhysicObject obj)
         {
             _objects.Remove(id);
         }
 
-        public void AddForceToObject(ActorId id, Vector2 force)
+        public void AddForceToObject(Entity id, Vector2 force)
         {
             if (_objects.ContainsKey(id) == false)
             {
@@ -35,7 +35,7 @@ namespace Helio.Physics
             _objects[id].AddForce(force);
         }
 
-        public void AddImpulseToObject(ActorId id, Vector2 impulse)
+        public void AddImpulseToObject(Entity id, Vector2 impulse)
         {
             if (_objects.ContainsKey(id) == false)
             {
@@ -47,7 +47,7 @@ namespace Helio.Physics
 
         public override void Update(GameTime gameTime)
         {
-            foreach (KeyValuePair<ActorId, PhysicObject> valuePair in _objects)
+            foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
             {
                 valuePair.Value.Update(gameTime);
             }

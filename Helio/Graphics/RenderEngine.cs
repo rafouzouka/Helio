@@ -7,31 +7,31 @@ namespace Helio.Graphics
 {
     public class RenderEngine : GameSystem, IRenderable
     {
-        private Dictionary<ActorId, IRenderableItem> _sprites;
+        private Dictionary<Entity, IRenderableItem> _sprites;
 
         public RenderEngine()
         {
-            _sprites = new Dictionary<ActorId, IRenderableItem>();
+            _sprites = new Dictionary<Entity, IRenderableItem>();
         }
 
-        protected void AddRenderableItem(ActorId actorId, IRenderableItem sprite)
+        protected void AddRenderableItem(Entity actorId, IRenderableItem sprite)
         {
             _sprites.Add(actorId, sprite);
         }
 
-        protected void RemoveRenderableItem(ActorId actorId)
+        protected void RemoveRenderableItem(Entity actorId)
         {
             _sprites.Remove(actorId);
         }
 
-        protected void MoveRenderableItem(ActorId actorId, Vector2 newPosition)
+        protected void MoveRenderableItem(Entity actorId, Vector2 newPosition)
         {
             _sprites[actorId].Move(newPosition);
         }
 
         public override void Update(GameTime gameTime)
         {
-            foreach (KeyValuePair<ActorId, IRenderableItem> keyValuePair in _sprites)
+            foreach (KeyValuePair<Entity, IRenderableItem> keyValuePair in _sprites)
             {
                 keyValuePair.Value.Update(gameTime);
             }
@@ -39,7 +39,7 @@ namespace Helio.Graphics
 
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            foreach (KeyValuePair<ActorId, IRenderableItem> keyValuePair in _sprites)
+            foreach (KeyValuePair<Entity, IRenderableItem> keyValuePair in _sprites)
             {
                 keyValuePair.Value.Draw(gameTime, renderer);
             }

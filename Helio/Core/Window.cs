@@ -6,9 +6,15 @@ namespace Helio.Core
     {
         private GameWindow _gameWindow;
         private GraphicsDeviceManager _graphics;
+        private string _title;
+        private int _width;
+        private int _height;
 
-        public Window(GraphicsDeviceManager graphics, GameWindow gameWindow)
+        public Window(string title, int width, int height, GraphicsDeviceManager graphics, GameWindow gameWindow)
         {
+            _title = title;
+            _width = width;
+            _height = height;
             _gameWindow = gameWindow;
             _graphics = graphics;
         }
@@ -16,9 +22,10 @@ namespace Helio.Core
         public void Initialize()
         {
             _graphics.IsFullScreen = false;
-            _graphics.PreferredBackBufferWidth = 1280;
-            _graphics.PreferredBackBufferHeight = 720;
+            _graphics.PreferredBackBufferWidth = _width;
+            _graphics.PreferredBackBufferHeight = _height;
             _gameWindow.AllowUserResizing = true;
+            _gameWindow.Title = _title;
             _graphics.ApplyChanges();
         }
     }

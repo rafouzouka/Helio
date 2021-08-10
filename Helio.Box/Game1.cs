@@ -50,6 +50,11 @@ namespace Helio.Box
 {
     public class Game1 : App
     {
+        public Game1() : base("Promethee", 1280, 720)
+        {
+
+        }
+
         protected override void Init()
         {
             gameLogic = new GameLogic();

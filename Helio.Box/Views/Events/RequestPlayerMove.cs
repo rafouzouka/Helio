@@ -1,8 +1,5 @@
-﻿using Helio.Actors;
+﻿using Helio.Core;
 using Helio.Events;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Helio.Box.Views.Events
 {
@@ -16,10 +13,10 @@ namespace Helio.Box.Views.Events
 
     public class RequestPlayerMove : Event
     {
-        public ActorId id;
+        public Entity id;
         public PlayerMoveDirection direction;
    
-        public RequestPlayerMove(ActorId id, PlayerMoveDirection direction)
+        public RequestPlayerMove(Entity id, PlayerMoveDirection direction)
         {
             this.id = id;
             this.direction = direction;

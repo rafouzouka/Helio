@@ -20,12 +20,12 @@ namespace Helio
         public List<View> views;
         public Input input;
 
-        public App()
+        public App(string title, int width, int height)
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _window = new Window(new GraphicsDeviceManager(this), Window);
+            _window = new Window(title, width, height, new GraphicsDeviceManager(this), Window);
 
             gameLogic = null;
             views = new List<View>();

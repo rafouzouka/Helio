@@ -1,5 +1,4 @@
-﻿using Helio.Actors;
-using Helio.Box.Logics.Events;
+﻿using Helio.Box.Logics.Events;
 using Helio.Box.Logics.Systems;
 using Helio.Box.Views.Events;
 using Helio.Core;
@@ -10,8 +9,8 @@ namespace Helio.Box.Systems
 {
     public class PlayerControl : GameSystem
     {
-        private ActorId _player;
-
+        private Entity _player;
+        
         public override void Init()
         {
             EventManager.Instance.AddListener(KeyboardPress, typeof(KeyboardPress));

@@ -1,22 +1,23 @@
 ﻿using Helio.Actors;
-using Helio.Box.Logics.Systems;
 using Helio.Core;
 using Helio.Events;
 using Microsoft.Xna.Framework;
 
 namespace Helio.Box.Logics.Events
 {
-    public class EntityCreated : Event
+    public class TerrainLoaded : Event
     {
         public Entity id;
-        public EntityType type;
         public Rectangle rect;
+        public int width;
+        public int[] tiles;
 
-        public EntityCreated(Entity id, EntityType type, Rectangle rect)
+        public TerrainLoaded(Entity id, Rectangle rect, int width, int[] tiles)
         {
             this.id = id;
-            this.type = type;
             this.rect = rect;
+            this.width = width;
+            this.tiles = tiles;
         }
     }
 }

@@ -4,6 +4,7 @@ using Helio.Events;
 using Helio.Physics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace Helio.Box.Systems
 {
@@ -13,32 +14,23 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
-            //EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
+            EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
+            EventManager.Instance.AddListener(TerrainLoaded, typeof(TerrainLoaded));
+        }
+
+        public void TerrainLoaded(Event ev)
+        {
+            TerrainLoaded e = (TerrainLoaded)ev;
+
+            AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 0.0f, new NoImpulseBehaviour(), new NoForceBehaviour()));
         }
 
         public void CreatePhysicObject(Event ev)
         {
             EntityCreated e = (EntityCreated)ev;
 
-            switch (e.type)
-            {
-                case EntityType.Player:
-                    AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 10.0f, new BasicImpulseBehaviour(), new BasicForceBehaviour()));
-                    AddForceToObject(e.id, _gravity);
-                    break;
-
-                case EntityType.Enemy:
-                    AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 10.0f, new BasicImpulseBehaviour(), new BasicForceBehaviour()));
-                    AddForceToObject(e.id, _gravity);
-                    break;
-
-                case EntityType.Block:
-                    AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 0.0f, new NoImpulseBehaviour(), new NoForceBehaviour()));
-                    break;
-
-                default:
-                    throw new Exception("The Type of the entity doesn't match with the renderer.");
-            }
+            AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 10.0f, new BasicImpulseBehaviour(), new BasicForceBehaviour()));
+            AddForceToObject(e.id, _gravity);
         }
     }
 }

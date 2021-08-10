@@ -8,7 +8,7 @@ namespace Helio.Box.Logics
     {
         public GameLogic()
         {
-            _systems.Add(new Entities());
+            _systems.Add(new Loading());
             _systems.Add(new Physic());
         }
     }
