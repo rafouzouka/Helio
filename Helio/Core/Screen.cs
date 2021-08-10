@@ -32,10 +32,10 @@ namespace Helio.Core
 
         public void Present()
         {
-            Rectangle destRect = CalculateDestRect();
+            //Rectangle destRect = CalculateDestRect();
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
-            _spriteBatch.Draw(_target, destRect, Color.White);
+            _spriteBatch.Draw(_target, _graphicsDevice.PresentationParameters.Bounds, Color.White);
             _spriteBatch.End();
         }
 

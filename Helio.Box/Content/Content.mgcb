@@ -49,3 +49,21 @@
 /processorParam:TextureFormat=Color
 /build:player.png
 
+#begin tile/backgroundsheet.tsx
+/copy:tile/backgroundsheet.tsx
+
+#begin tile/testmap.tmx
+/copy:tile/testmap.tmx
+
+#begin tile/tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:tile/tileset.png
+

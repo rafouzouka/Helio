@@ -14,6 +14,8 @@
 // Tools:
 // making sound noise : https://sfxr.me/
 
+// Create a tilset with aseprite: https://www.youtube.com/watch?v=btnH0x7_1g8
+
 // Try to learn more about raycast and more
 
 /*

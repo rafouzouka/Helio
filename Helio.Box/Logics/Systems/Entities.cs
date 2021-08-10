@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework.Content;
 
-using Helio.Actors;
-using Helio.Box.Logics.Events;
 using Helio.Core;
-using Helio.Events;
 
 namespace Helio.Box.Logics.Systems
 {
@@ -24,7 +20,7 @@ namespace Helio.Box.Logics.Systems
 
         public override void LoadContent(ContentManager contentManager)
         {
-            Actor player = ActorFactory.CreateEmptyActor();
+            /*Actor player = ActorFactory.CreateEmptyActor();
             Rectangle PlayerRect = new Rectangle(100, 400, 80, 80);
             EventManager.Instance.QueueEvent(new EntityCreated(player.GetId(), EntityType.Player, PlayerRect));
 
@@ -34,7 +30,7 @@ namespace Helio.Box.Logics.Systems
 
             Actor block = ActorFactory.CreateEmptyActor();
             Rectangle blockRect = new Rectangle(600, 400, 80, 80);
-            EventManager.Instance.QueueEvent(new EntityCreated(block.GetId(), EntityType.Block, blockRect));
+            EventManager.Instance.QueueEvent(new EntityCreated(block.GetId(), EntityType.Block, blockRect));*/
         }
     }
 }

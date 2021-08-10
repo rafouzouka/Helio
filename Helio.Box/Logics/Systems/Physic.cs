@@ -13,7 +13,7 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
-            EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
+            //EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
         }
 
         public void CreatePhysicObject(Event ev)

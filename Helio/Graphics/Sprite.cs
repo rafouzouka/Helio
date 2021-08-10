@@ -3,21 +3,23 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Helio.Graphics
 {
-    public class Sprite
+    public class Sprite : IRenderableItem
     {
         private Texture2D _texture;
-        private Rectangle _spriteRect;
+        private Rectangle? _src;
+        private Rectangle _dst;
 
-        public Sprite(Texture2D texture, Rectangle spriteRect)
+        public Sprite(Texture2D texture, Rectangle dst, Rectangle? src)
         {
             _texture = texture;
-            _spriteRect = spriteRect;
+            _src = src;
+            _dst = dst;
         }
 
         public void Move(Vector2 newPosition)
         {
-            _spriteRect.X = (int)newPosition.X;
-            _spriteRect.Y = (int)newPosition.Y;
+            _dst.X = (int)newPosition.X;
+            _dst.Y = (int)newPosition.Y;
         }
 
         public void Update(GameTime gameTime)
@@ -27,7 +29,7 @@ namespace Helio.Graphics
 
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            renderer.Draw(_texture, _spriteRect, null);
+            renderer.Draw(_texture, _dst, _src);
         }
     }
 }

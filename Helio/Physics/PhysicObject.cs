@@ -52,7 +52,7 @@ namespace Helio.Physics
             _impulseBehaviour.RemoveImpulse(force);
         }
 
-        public void Update(GameTime gameTime)
+        private void CalcPhysicMotion(GameTime gameTime)
         {
             if (_mass == 0.0f)
             {
@@ -70,6 +70,11 @@ namespace Helio.Physics
 
                 EventManager.Instance.QueueEvent(new ActorPhysicMoved(_actorId, _position));
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            CalcPhysicMotion(gameTime);
         }
     }
 }
