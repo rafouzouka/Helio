@@ -1,8 +1,10 @@
 ﻿using Helio.Actors;
 using Helio.Core;
+using Helio.Events;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Helio.Physics
 {
@@ -25,14 +27,6 @@ namespace Helio.Physics
             _objects.Remove(id);
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            foreach (KeyValuePair<ActorId, PhysicObject> valuePair in _objects)
-            {
-                valuePair.Value.Update(gameTime);
-            }
-        }
-
         public void AddForceToObject(ActorId id, Vector2 force)
         {
             if (_objects.ContainsKey(id) == false)
@@ -40,7 +34,25 @@ namespace Helio.Physics
                 throw new Exception("ACTOR MUST ALREADY EXIST");
             }
 
-            //_objects[id].
+            _objects[id].AddForce(force);
+        }
+
+        public void AddImpulseToObject(ActorId id, Vector2 impulse)
+        {
+            if (_objects.ContainsKey(id) == false)
+            {
+                throw new Exception("ACTOR MUST ALREADY EXIST");
+            }
+
+            _objects[id].AddImpulse(impulse);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            foreach (KeyValuePair<ActorId, PhysicObject> valuePair in _objects)
+            {
+                valuePair.Value.Update(gameTime);
+            }
         }
     }
 }

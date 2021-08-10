@@ -31,6 +31,10 @@ namespace Helio.Box.Logics.Systems
             Actor enemy = ActorFactory.CreateEmptyActor();
             Rectangle enemyRect = new Rectangle(400, 400, 80, 80);
             EventManager.Instance.QueueEvent(new EntityCreated(enemy.GetId(), EntityType.Enemy, enemyRect));
+
+            Actor block = ActorFactory.CreateEmptyActor();
+            Rectangle blockRect = new Rectangle(600, 400, 80, 80);
+            EventManager.Instance.QueueEvent(new EntityCreated(block.GetId(), EntityType.Block, blockRect));
         }
     }
 }
