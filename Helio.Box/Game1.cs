@@ -20,6 +20,13 @@
 
 /*
  * Todo:
+ * The Interface system must be done
+ * The Level or Scene Switch system must be done too that allow to swith from editor to level.
+ * Faire bouger la camera 
+ * faire l'interface en flexbox
+ * ajouter des render en mode debug (les guizmo)
+ * ajouter le logger pour le debug
+ * 
  * Friction and Restitution
  * Physics System (AABB Rect Collider only) Create Collide Event during collision (look at unity for naming conv like rigibody)
  * Debug Drawing for things like entity ID and box of collider
@@ -50,7 +57,7 @@ namespace Helio.Box
 {
     public class Game1 : App
     {
-        public Game1() : base("Promethee", 1280, 720)
+        public Game1() : base("Promethee", 1280, 720, 1280/2, 720/2)
         {
 
         }

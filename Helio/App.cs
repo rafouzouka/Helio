@@ -14,18 +14,17 @@ namespace Helio
     {
         private Renderer _renderer;
         private Window _window;
-        private Screen _screen;
 
         public Logic gameLogic;
         public List<View> views;
         public Input input;
 
-        public App(string title, int width, int height)
+        public App(string title, int windowWidth, int windowHeight, int targetWidth, int targetHeight)
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _window = new Window(title, width, height, new GraphicsDeviceManager(this), Window);
+            _window = new Window(title, windowWidth, windowHeight, targetWidth, targetHeight, new GraphicsDeviceManager(this), Window);
 
             gameLogic = null;
             views = new List<View>();
@@ -53,18 +52,15 @@ namespace Helio
         {
             SpriteBatch spriteBatch = new SpriteBatch(GraphicsDevice);
             _renderer = new Renderer(spriteBatch);
-            int divider = 4;
-            _screen = new Screen(spriteBatch, GraphicsDevice, 1920 / divider, 1080 / divider);
+            _window.LoadContent(spriteBatch);
 
             gameLogic.LoadContent(Content);
-
             foreach (View view in views)
             {
                 view.LoadContent(Content);
             }
 
             gameLogic.Start();
-
             foreach (View view in views)
             {
                 view.Start();
@@ -76,13 +72,10 @@ namespace Helio
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Handling inputs
             input.PollEvents();
 
-            // Normal
             EventManager.Instance.Update();
             gameLogic.Update(gameTime);
-            
             foreach (View view in views)
             {
                 view.Update(gameTime);
@@ -95,18 +88,17 @@ namespace Helio
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _screen.Set();
-            _renderer.Begin();
+            _window.Set();
 
+            _renderer.Begin();
             foreach (View view in views)
             {
                 view.Draw(gameTime, _renderer);
             }
-
             _renderer.End();
 
-            _screen.Unset();
-            _screen.Present();
+            _window.Unset();
+            _window.Present();
 
             base.Draw(gameTime);
         }
