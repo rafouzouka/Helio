@@ -22,6 +22,11 @@ namespace Helio.Graphics
             _spriteBatch.Draw(texture, dest, src, Color.White);
         }
 
+        public void DrawText(SpriteFont spriteFont, string text, Vector2 position, Color color)
+        {
+            _spriteBatch.DrawString(spriteFont, text, position, color);
+        }
+
         public void End()
         {
             _spriteBatch.End();

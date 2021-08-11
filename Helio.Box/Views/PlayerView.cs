@@ -1,4 +1,5 @@
 ﻿using Helio.Box.Systems;
+using Helio.Box.Views.Screens;
 using Helio.Core;
 
 namespace Helio.Box.Views
@@ -8,6 +9,7 @@ namespace Helio.Box.Views
         public PlayerView()
         {
             AddScreen(new Render());
+            AddScreen(new PlayerHUD());
 
             AddSystem(new Sound());
             AddSystem(new PlayerControl());
