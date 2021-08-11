@@ -3,9 +3,9 @@ using Helio.Core;
 
 namespace Helio.Box.Views
 {
-    public class Player : HumanView
+    public class PlayerView : HumanView
     {
-        public Player()
+        public PlayerView()
         {
             AddScreen(new Render());
 

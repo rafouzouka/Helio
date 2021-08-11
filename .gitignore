@@ -1,7 +1,10 @@
 #OS junk files
 [Tt]humbs.db
 *.DS_Store
+
+#self add
 .vs
+links.txt
 
 #Visual Studio files
 *.pidb
