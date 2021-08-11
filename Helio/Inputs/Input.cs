@@ -13,14 +13,24 @@ namespace Helio.Inputs
         private Keys[] _previousKeysPressed;
         private Keys[] _currentKeysPressed;
 
+        private List<Event> _events;
+
         public Input()
         {
             _currentkeyboardState = Keyboard.GetState();
             _currentKeysPressed = _currentkeyboardState.GetPressedKeys();
+            _events = new List<Event>();
+        }
+
+        public List<Event> GetEvents()
+        {
+            return _events;
         }
 
         public void PollEvents()
         {
+            _events.Clear();
+
             _previouskeyboardState = _currentkeyboardState;
             _previousKeysPressed = _currentKeysPressed;
 
@@ -31,11 +41,11 @@ namespace Helio.Inputs
             {
                 if (_previouskeyboardState[key] == KeyState.Up)
                 {
-                    EventManager.Instance.QueueEvent(new KeyboardPressed((KeyboardKeys)key));
+                    _events.Add(new KeyboardPressed((KeyboardKeys)key));
                 }
                 else
                 {
-                    EventManager.Instance.QueueEvent(new KeyboardPress((KeyboardKeys)key));
+                    _events.Add(new KeyboardPress((KeyboardKeys)key));
                 }
             }
 
@@ -43,7 +53,7 @@ namespace Helio.Inputs
             {
                 if (_currentkeyboardState[key] == KeyState.Up)
                 {
-                    EventManager.Instance.QueueEvent(new KeyboardReleased((KeyboardKeys)key));
+                    _events.Add(new KeyboardReleased((KeyboardKeys)key));
                 }
             }
         }

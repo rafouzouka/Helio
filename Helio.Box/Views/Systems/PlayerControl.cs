@@ -4,14 +4,16 @@ using Helio.Box.Views.Events;
 using Helio.Core;
 using Helio.Events;
 using Helio.Inputs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace Helio.Box.Systems
 {
-    public class PlayerControl : GameSystem
+    public class PlayerControl : ISystem
     {
         private Entity _player;
         
-        public override void Init()
+        public void Init()
         {
             EventManager.Instance.AddListener(KeyboardPress, typeof(KeyboardPress));
             EventManager.Instance.AddListener(RegisterPlayerOnCreation, typeof(EntityCreated));
@@ -44,6 +46,10 @@ namespace Helio.Box.Systems
             }
         }
 
+        public void LoadContent(ContentManager contentManager)
+        {
+        }
+
         public void RegisterPlayerOnCreation(Event ev)
         {
             EntityCreated e = (EntityCreated)ev;
@@ -52,6 +58,14 @@ namespace Helio.Box.Systems
             {
                 _player = e.id;
             }
+        }
+
+        public void Start()
+        {
+        }
+
+        public void Update(GameTime gameTime)
+        {
         }
     }
 }

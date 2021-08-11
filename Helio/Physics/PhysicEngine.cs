@@ -1,12 +1,12 @@
-﻿using Helio.Actors;
-using Helio.Core;
+﻿using Helio.Core;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using System;
 using System.Collections.Generic;
 
 namespace Helio.Physics
 {
-    public class PhysicEngine : GameSystem
+    public class PhysicEngine : ISystem
     {
         private Dictionary<Entity, PhysicObject> _objects;
 
@@ -45,12 +45,24 @@ namespace Helio.Physics
             _objects[id].AddImpulse(impulse);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
             {
                 valuePair.Value.Update(gameTime);
             }
+        }
+
+        public virtual void Init()
+        {
+        }
+
+        public virtual void LoadContent(ContentManager contentManager)
+        {
+        }
+
+        public virtual void Start()
+        {
         }
     }
 }

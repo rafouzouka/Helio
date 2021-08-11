@@ -6,6 +6,7 @@ using TiledCS;
 using Helio.Events;
 using Helio.Box.Logics.Events;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace Helio.Box.Logics.Systems
 {
@@ -16,14 +17,13 @@ namespace Helio.Box.Logics.Systems
         Enemy,
     }
 
-    public class Loading : GameSystem
+    public class Loading : ISystem
     {
-        public override void Init()
+        public void Init()
         {
-            //EventManager.Instance.AddListener(RequestPlayerMove, typeof(RequestPlayerMove));
         }
 
-        public override void LoadContent(ContentManager contentManager)
+        public void LoadContent(ContentManager contentManager)
         {
             Entity terrain = EntityCreator.Create();
             TiledMap tiledMap = new TiledMap("Content/tile/testmap.tmx");
@@ -37,6 +37,14 @@ namespace Helio.Box.Logics.Systems
             Entity enemy = EntityCreator.Create();
             Rectangle enemyRect = new Rectangle(40, 40, 16, 32);
             EventManager.Instance.QueueEvent(new EntityCreated(enemy, EntityType.Enemy, enemyRect));
+        }
+
+        public void Start()
+        {
+        }
+
+        public void Update(GameTime gameTime)
+        {
         }
     }
 }

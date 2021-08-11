@@ -26,6 +26,9 @@
  * faire l'interface en flexbox
  * ajouter des render en mode debug (les guizmo)
  * ajouter le logger pour le debug
+ * utiliser un fichier de configuration XML pour setup monogame plutot que de passer des parametres
+ * 
+ * utiliser le command pattern pour associer des actions a des touches du clavier comme 
  * 
  * Friction and Restitution
  * Physics System (AABB Rect Collider only) Create Collide Event during collision (look at unity for naming conv like rigibody)
@@ -57,15 +60,9 @@ namespace Helio.Box
 {
     public class Game1 : App
     {
-        public Game1() : base("Promethee", 1280, 720, 1280/2, 720/2)
+        public Game1() : base("Promethee", 1280, 720, 1280/2, 720/2, new GameLogic(), new Player())
         {
 
-        }
-
-        protected override void Init()
-        {
-            gameLogic = new GameLogic();
-            views.Add(new HumanView());
         }
     }
 }

@@ -1,11 +1,13 @@
-﻿using Helio.Actors;
-using Helio.Core;
+﻿using Helio.Core;
+using Helio.Events;
+using Helio.Screens;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using System.Collections.Generic;
 
 namespace Helio.Graphics
 {
-    public class RenderEngine : GameSystem, IRenderable
+    public abstract class RenderEngine : IScreen
     {
         private Dictionary<Entity, IRenderableItem> _sprites;
 
@@ -29,7 +31,7 @@ namespace Helio.Graphics
             _sprites[actorId].Move(newPosition);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             foreach (KeyValuePair<Entity, IRenderableItem> keyValuePair in _sprites)
             {
@@ -43,6 +45,23 @@ namespace Helio.Graphics
             {
                 keyValuePair.Value.Draw(gameTime, renderer);
             }
+        }
+
+        public virtual void Init()
+        {
+        }
+
+        public virtual void LoadContent(ContentManager contentManager)
+        {
+        }
+
+        public virtual void Start()
+        {
+        }
+
+        public virtual bool OnEvent(Event ev)
+        {
+            return true;
         }
     }
 }

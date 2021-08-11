@@ -20,7 +20,6 @@ namespace Helio.Box.Systems
         public override void Init()
         {
             EventManager.Instance.AddListener(EntityCreated, typeof(EntityCreated));
-            //    EventManager.Instance.AddListener(ActorPhysicMoved, typeof(ActorPhysicMoved));
             EventManager.Instance.AddListener(TerrainLoaded, typeof(TerrainLoaded));
         }
 
@@ -62,12 +61,6 @@ namespace Helio.Box.Systems
                 default:
                     throw new Exception("The Type of the entity doesn't match with the renderer.");
             }
-        }
-
-        public void ActorPhysicMoved(Event ev)
-        {
-/*            ActorPhysicMoved e = (ActorPhysicMoved)ev;
-            MoveSprite(e.id, e.newPosition);*/
         }
     }
 }

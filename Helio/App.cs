@@ -15,18 +15,22 @@ namespace Helio
         private Renderer _renderer;
         private Window _window;
 
-        public Logic gameLogic;
+        private Logic _gameLogic;
+        private HumanView _humanView;
+
         public List<View> views;
         public Input input;
 
-        public App(string title, int windowWidth, int windowHeight, int targetWidth, int targetHeight)
+        public App(string title, int windowWidth, int windowHeight, int targetWidth, int targetHeight, Logic gameLogic, HumanView humanView)
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
             _window = new Window(title, windowWidth, windowHeight, targetWidth, targetHeight, new GraphicsDeviceManager(this), Window);
 
-            gameLogic = null;
+
+            _gameLogic = gameLogic;
+            _humanView = humanView;
             views = new List<View>();
             input = new Input();
         }
@@ -34,9 +38,9 @@ namespace Helio
         sealed protected override void Initialize()
         {
             _window.Initialize();
-            Init();
             
-            gameLogic.Init();
+            _gameLogic.Init();
+            _humanView.Init();
 
             foreach (View view in views)
             {
@@ -46,21 +50,21 @@ namespace Helio
             base.Initialize();
         }
 
-        protected virtual void Init() { }
-
         sealed protected override void LoadContent()
         {
             SpriteBatch spriteBatch = new SpriteBatch(GraphicsDevice);
             _renderer = new Renderer(spriteBatch);
             _window.LoadContent(spriteBatch);
 
-            gameLogic.LoadContent(Content);
+            _gameLogic.LoadContent(Content);
+            _humanView.LoadContent(Content);
             foreach (View view in views)
             {
                 view.LoadContent(Content);
             }
 
-            gameLogic.Start();
+            _gameLogic.Start();
+            _humanView.Start();
             foreach (View view in views)
             {
                 view.Start();
@@ -73,9 +77,11 @@ namespace Helio
                 Exit();
 
             input.PollEvents();
+            _humanView.OnInputs(input.GetEvents());
 
             EventManager.Instance.Update();
-            gameLogic.Update(gameTime);
+            _gameLogic.Update(gameTime);
+            _humanView.Update(gameTime);
             foreach (View view in views)
             {
                 view.Update(gameTime);
@@ -91,10 +97,7 @@ namespace Helio
             _window.Set();
 
             _renderer.Begin();
-            foreach (View view in views)
-            {
-                view.Draw(gameTime, _renderer);
-            }
+            _humanView.Draw(gameTime, _renderer);
             _renderer.End();
 
             _window.Unset();

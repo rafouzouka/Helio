@@ -7,11 +7,21 @@ namespace Helio.Core
 {
     public abstract class View
     {
-        protected List<GameSystem> _systems = new List<GameSystem>();
+        private List<ISystem> _systems = new List<ISystem>();
+
+        public void AddSystem(ISystem system)
+        {
+            _systems.Add(system);
+        }
+
+        public void RemoveSystem(ISystem system)
+        {
+            _systems.Add(system);
+        }
 
         public virtual void Init()
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Init();
             }
@@ -19,7 +29,7 @@ namespace Helio.Core
 
         public virtual void LoadContent(ContentManager contentManager)
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.LoadContent(contentManager);
             }
@@ -27,7 +37,7 @@ namespace Helio.Core
 
         public virtual void Start()
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Start();
             }
@@ -35,20 +45,9 @@ namespace Helio.Core
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Update(gameTime);
-            }
-        }
-
-        public virtual void Draw(GameTime gameTime, Renderer renderer)
-        {
-            foreach (GameSystem system in _systems)
-            {
-                if (system is IRenderable renderable)
-                {
-                    renderable.Draw(gameTime, renderer);
-                }
             }
         }
     }

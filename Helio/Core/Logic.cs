@@ -6,11 +6,11 @@ namespace Helio.Core
 {
     public abstract class Logic
     {
-        protected List<GameSystem> _systems = new List<GameSystem>();
+        protected List<ISystem> _systems = new List<ISystem>();
 
         public virtual void Init()
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Init();
             }
@@ -18,7 +18,7 @@ namespace Helio.Core
 
         public virtual void LoadContent(ContentManager contentManager)
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.LoadContent(contentManager);
             }
@@ -26,7 +26,7 @@ namespace Helio.Core
 
         public virtual void Start()
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Start();
             }
@@ -34,7 +34,7 @@ namespace Helio.Core
 
         public virtual void Update(GameTime gameTime)
         {
-            foreach (GameSystem system in _systems)
+            foreach (ISystem system in _systems)
             {
                 system.Update(gameTime);
             }
