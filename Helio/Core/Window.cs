@@ -38,6 +38,7 @@ namespace Helio.Core
 
         public void Initialize()
         {
+            _graphics.SynchronizeWithVerticalRetrace = true;
             _graphics.IsFullScreen = false;
             _graphics.PreferredBackBufferWidth = _windowWidth;
             _graphics.PreferredBackBufferHeight = _windowHeight;

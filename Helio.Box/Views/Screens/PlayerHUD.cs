@@ -27,11 +27,11 @@ namespace Helio.Box.Views.Screens
 
         public void DebugDraw(GameTime gameTime, Renderer renderer)
         {
-            if (gameTime.TotalGameTime.Ticks % 10 == 0)
+            if (gameTime.TotalGameTime.Ticks % 100 == 0)
             {
                 fps = 1.0 / gameTime.ElapsedGameTime.TotalSeconds;
             }
-            renderer.DrawText(_font, $"{fps:N2} FPS", new Vector2(10, 10), Color.White);
+            renderer.DrawText(_font, $"{(int)fps} FPS", new Vector2(10, 10), Color.White);
         }
     }
 }

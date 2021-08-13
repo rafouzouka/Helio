@@ -13,24 +13,28 @@ namespace Helio.Physics
         private Vector2 _position;
         private Vector2 _velocity;
         private Vector2 _acceleration;
-        private float _mass;
 
-        private Rectangle _collider;
+        private PhysicMaterial _physicMaterial;
+
         private IImpulseBehaviour _impulseBehaviour;
         private IForceBehaviour _forceBehaviour;
+        private IMotionCalculation _motionCalculation;
+        private IColliderBehaviour _colliderBehaviour;
 
-        public PhysicObject(Entity id, Rectangle collider, float mass, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour)
+        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour, IMotionCalculation motionCalculation, IColliderBehaviour colliderBehaviour)
         {
             _id = id;
 
-            _position = new Vector2(collider.X, collider.Y);
+            _position = new Vector2(colliderBehaviour.GetCollider().X, colliderBehaviour.GetCollider().Y);
             _velocity = new Vector2(0, 0);
             _acceleration = new Vector2(0, 0);
-            _mass = mass;
 
-            _collider = collider;
+            _physicMaterial = physicMaterial;
+
             _impulseBehaviour = impulseBehaviour;
             _forceBehaviour = forceBehaviour;
+            _motionCalculation = motionCalculation;
+            _colliderBehaviour = colliderBehaviour;
         }
 
         public void AddForce(Vector2 force)
@@ -53,32 +57,33 @@ namespace Helio.Physics
             _impulseBehaviour.RemoveImpulse(force);
         }
 
-        private void CalcPhysicMotion(GameTime gameTime)
+        public void CalcPhysicMotion(GameTime gameTime)
         {
-            if (_mass == 0.0f)
-            {
-                return;
-            }
-
             Vector2 force = _forceBehaviour.GetForceResulting();
             force += _impulseBehaviour.GetForceResulting();
 
-            _acceleration = force / _mass;
-            _velocity += _acceleration * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            _position += _velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-
-            _collider.X = (int)_position.X;
-            _collider.Y = (int)_position.Y;
-
-            if (_velocity != Vector2.Zero)
-            {
-                EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _collider));
-            }
+            Vector2 newPosition = _motionCalculation.CalcNewPosition(ref _acceleration, ref _velocity, ref _position, force, _physicMaterial, gameTime);
+            _colliderBehaviour.MoveCollider(newPosition);
         }
 
-        public void Update(GameTime gameTime)
+        public void CheckCollision(PhysicObject otherPhysicObject)
         {
-            CalcPhysicMotion(gameTime);
+            Vector2 penetrationCollision = _colliderBehaviour.CheckCollision(otherPhysicObject);
+
+            if (penetrationCollision != Vector2.Zero)
+            {
+                _position.Y -= penetrationCollision.Y;
+                _velocity.Y = 0f;
+
+                _colliderBehaviour.MoveCollider(_position);
+            }
+
+            EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _colliderBehaviour.GetCollider()));
+        }
+
+        public Rectangle GetCollider()
+        {
+            return _colliderBehaviour.GetCollider();
         }
     }
 }

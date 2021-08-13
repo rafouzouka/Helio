@@ -9,7 +9,7 @@ namespace Helio.Box.Systems
 {
     public class Physic : PhysicSystem
     {
-        private Vector2 _gravity = new Vector2(0, 0.01f);
+        private Vector2 _gravity = new Vector2(0, 300f);
 
         public override void Init()
         {
@@ -22,22 +22,54 @@ namespace Helio.Box.Systems
         {
             TerrainLoaded e = (TerrainLoaded)ev;
 
-            //AddPhysicObject(e.id, new PhysicObject(e.id, e.collider, 0.0f, new NoImpulseBehaviour(), new NoForceBehaviour()));
+            AddPhysicObject(e.id, new PhysicObject(
+                e.id,
+                new PhysicMaterial(0f, 0f, 0f),
+                new NoImpulseBehaviour(),
+                new NoForceBehaviour(),
+                new LimitedVelocity(0.0f, 10.0f),
+                new StaticColliderBehaviour(e.colliders[0])
+            ));
         }
 
         public void CreatePhysicObject(Event ev)
         {
             EntityCreated e = (EntityCreated)ev;
 
-            AddPhysicObject(e.id, new PhysicObject(e.id, e.collider, 10.0f, new BasicImpulseBehaviour(), new NoForceBehaviour()));
+            AddPhysicObject(e.id, new PhysicObject(
+                e.id,
+                new PhysicMaterial(1.0f, 0f, 0f),
+                new BasicImpulseBehaviour(),
+                new BasicForceBehaviour(),
+                new LimitedVelocity(-500.0f, 500.0f),
+                new DynamicColliderBehaviour(e.collider)
+            ));
+            
+            AddForceToObject(e.id, _gravity);
         }
 
         public void RequestPlayerMove(Event ev)
         {
             RequestPlayerMove e = (RequestPlayerMove)ev;
 
-            AddImpulseToObject(e.entity, new Vector2(0f, -0.01f));
-            Debug.WriteLine($"REQUEST PLAYER MOVE: {e.movementType}");
+            switch (e.movementType)
+            {
+                case PlayerMovementType.Jump:
+                    AddImpulseToObject(e.entity, new Vector2(0f, -10000f));
+                    break;
+
+                case PlayerMovementType.WalkRight:
+                    AddImpulseToObject(e.entity, new Vector2(1000f, 0f));
+                    break;
+
+                case PlayerMovementType.WalkLeft:
+                    AddImpulseToObject(e.entity, new Vector2(-1000f, 0f));
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     }
 }

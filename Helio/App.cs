@@ -29,7 +29,6 @@ namespace Helio
 
             _window = new Window(title, windowWidth, windowHeight, targetWidth, targetHeight, new GraphicsDeviceManager(this), Window);
 
-
             _gameLogic = gameLogic;
             _humanView = humanView;
             views = new List<View>();

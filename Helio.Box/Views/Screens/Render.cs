@@ -50,6 +50,7 @@ namespace Helio.Box.Systems
                 map.Add(new Tile(e.tiles[i] - 1, i % e.width, i / e.width));
             }
             AddRenderableItem(e.id, new TileMap(_tileSet, 8, 8, map));
+            _entityCollidersDebug.Add(e.id, e.colliders[0]);
         }
 
         public void EntityCreated(Event ev)

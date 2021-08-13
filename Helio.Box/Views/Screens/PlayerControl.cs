@@ -36,10 +36,21 @@ namespace Helio.Box.Views.Screens
                 {
                     case KeyboardKeys.Space:
                         EventManager.Instance.QueueEvent(new RequestPlayerMove(_player, PlayerMovementType.Jump));
-                        break;
+                        return false;
+                }
+            }
 
-                    default:
-                        return true;
+            if (input is KeyboardPress keyboardPres)
+            {
+                switch (keyboardPres.key)
+                {
+                    case KeyboardKeys.D:
+                        EventManager.Instance.QueueEvent(new RequestPlayerMove(_player, PlayerMovementType.WalkRight));
+                        return false;
+
+                    case KeyboardKeys.Q:
+                        EventManager.Instance.QueueEvent(new RequestPlayerMove(_player, PlayerMovementType.WalkLeft));
+                        return false;
                 }
             }
 
