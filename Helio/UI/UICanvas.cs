@@ -1,9 +1,8 @@
-﻿using Helio.Events;
-using Helio.Graphics;
+﻿using Helio.Graphics;
+using Helio.Inputs;
 using Helio.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using System.Collections.Generic;
 
 namespace Helio.UI
 {
@@ -24,7 +23,7 @@ namespace Helio.UI
         {
         }
 
-        public virtual bool OnEvent(Event ev)
+        public virtual bool OnInput(InputEvent input)
         {
             return true;
         }

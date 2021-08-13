@@ -1,5 +1,6 @@
 ﻿using Helio.Events;
 using Helio.Graphics;
+using Helio.Inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using System;
@@ -27,11 +28,11 @@ namespace Helio.Screens
             _screens.Remove(screen);
         }
 
-        public void OnEvent(Event ev)
+        public void OnInput(InputEvent input)
         {
             foreach (IScreen screen in _screens)
             {
-                if (screen.OnEvent(ev) == false)
+                if (screen.OnInput(input) == false)
                 {
                     break;
                 }

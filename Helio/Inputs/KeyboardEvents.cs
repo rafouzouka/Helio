@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Helio.Inputs
 {
-    public class KeyboardPressed : Event
+    public class KeyboardPressed : InputEvent
     {
         public KeyboardKeys key;
 
@@ -15,7 +15,7 @@ namespace Helio.Inputs
         }
     }
     
-    public class KeyboardReleased : Event
+    public class KeyboardReleased : InputEvent
     {
         public KeyboardKeys key;
 
@@ -25,7 +25,7 @@ namespace Helio.Inputs
         }
     }
 
-    public class KeyboardPress : Event
+    public class KeyboardPress : InputEvent
     {
         public KeyboardKeys key;
 

@@ -77,7 +77,7 @@ namespace Helio
                 Exit();
 
             input.PollEvents();
-            _humanView.OnInputs(input.GetEvents());
+            _humanView.OnInputs(input.GetInputs());
 
             EventManager.Instance.Update();
             _gameLogic.Update(gameTime);

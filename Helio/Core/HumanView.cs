@@ -1,5 +1,6 @@
 ﻿using Helio.Events;
 using Helio.Graphics;
+using Helio.Inputs;
 using Helio.Screens;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -43,11 +44,11 @@ namespace Helio.Core
             _screenManager.Start();
         }
 
-        public void OnInputs(List<Event> events)
+        public void OnInputs(List<InputEvent> inputEvents)
         {
-            foreach (Event ev in events)
+            foreach (InputEvent ev in inputEvents)
             {
-                _screenManager.OnEvent(ev);
+                _screenManager.OnInput(ev);
             }
         }
 

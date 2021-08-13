@@ -29,8 +29,7 @@ namespace Helio.Box.Systems
         {
             EntityCreated e = (EntityCreated)ev;
 
-            AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 10.0f, new BasicImpulseBehaviour(), new BasicForceBehaviour()));
-            AddForceToObject(e.id, _gravity);
+            AddPhysicObject(e.id, new PhysicObject(e.id, e.rect, 10.0f, new BasicImpulseBehaviour(), new NoForceBehaviour()));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
+
         }
 
         public override void LoadContent(ContentManager contentManager)
