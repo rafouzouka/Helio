@@ -26,6 +26,11 @@ namespace Helio.Graphics
             _sprites.Remove(actorId);
         }
 
+        protected Dictionary<Entity, IRenderableItem> GetRenderableItems()
+        {
+            return _sprites;
+        }
+
         protected void MoveRenderableItem(Entity actorId, Vector2 newPosition)
         {
             _sprites[actorId].Move(newPosition);

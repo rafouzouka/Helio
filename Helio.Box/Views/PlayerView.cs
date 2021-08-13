@@ -10,6 +10,7 @@ namespace Helio.Box.Views
         {
             AddScreen(new Render());
             AddScreen(new PlayerHUD());
+            AddScreen(new PlayerControl());
 
             AddSystem(new Musics());
         }

@@ -63,13 +63,16 @@ namespace Helio.Physics
             Vector2 force = _forceBehaviour.GetForceResulting();
             force += _impulseBehaviour.GetForceResulting();
 
-            if (force != Vector2.Zero)
-            {
-                _acceleration = force / _mass;
-                _velocity += _acceleration * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                _position += _velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            _acceleration = force / _mass;
+            _velocity += _acceleration * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            _position += _velocity * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
-                EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _position));
+            _collider.X = (int)_position.X;
+            _collider.Y = (int)_position.Y;
+
+            if (_velocity != Vector2.Zero)
+            {
+                EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _collider));
             }
         }
 

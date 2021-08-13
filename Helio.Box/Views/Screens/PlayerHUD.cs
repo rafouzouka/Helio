@@ -1,7 +1,4 @@
-﻿using Helio.Box.Logics.Events;
-using Helio.Box.Logics.Systems;
-using Helio.Core;
-using Helio.Events;
+﻿using Helio.Graphics;
 using Helio.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -9,29 +6,32 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Helio.Box.Views.Screens
 {
-    public class PlayerHUD : UICanvas
+    public class PlayerHUD : UICanvas, IDebugRenderable
     {
-        private Entity _player;
+        private SpriteFont _font;
+        public double fps = 0f;
 
         public override void Init()
         {
-            EventManager.Instance.AddListener(RegisterPlayerEntity, typeof(EntityCreated));
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-            SpriteFont aria = contentManager.Load<SpriteFont>("fonts/Aria");
+            _font = contentManager.Load<SpriteFont>("fonts/Aria");
             //AddUIElement(new Text(aria, "Salut les gens", Color.Red));
         }
 
-        public void RegisterPlayerEntity(Event ev)
+        public override void Draw(GameTime gameTime, Renderer renderer)
         {
-            EntityCreated e = (EntityCreated)ev;
+        }
 
-            if (e.type == EntityType.Player)
+        public void DebugDraw(GameTime gameTime, Renderer renderer)
+        {
+            if (gameTime.TotalGameTime.Ticks % 10 == 0)
             {
-                _player = e.id;
+                fps = 1.0 / gameTime.ElapsedGameTime.TotalSeconds;
             }
+            renderer.DrawText(_font, $"{fps:N2} FPS", new Vector2(10, 10), Color.White);
         }
     }
 }

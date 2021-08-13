@@ -8,12 +8,12 @@ namespace Helio.Physics
     public class EntityPhysicMoved : Event
     {
         public Entity id;
-        public Vector2 newPosition;
+        public Rectangle collider;
 
-        public EntityPhysicMoved(Entity id, Vector2 newPosition)
+        public EntityPhysicMoved(Entity id, Rectangle collider)
         {
             this.id = id;
-            this.newPosition = newPosition;
+            this.collider = collider;
         }
     }
 }

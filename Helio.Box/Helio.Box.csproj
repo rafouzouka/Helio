@@ -31,7 +31,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Helio\Helio.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Events\" />
-  </ItemGroup>
 </Project>

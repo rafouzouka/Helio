@@ -77,6 +77,14 @@ namespace Helio.Screens
             {
                 screen.Draw(gameTime, renderer);
             }
+
+            foreach (IScreen screen in _screens)
+            {
+                if (screen is IDebugRenderable debug)
+                {
+                    debug.DebugDraw(gameTime, renderer);
+                }
+            }
         }
     }
 }

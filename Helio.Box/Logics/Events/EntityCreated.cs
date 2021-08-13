@@ -10,13 +10,15 @@ namespace Helio.Box.Logics.Events
     {
         public Entity id;
         public EntityType type;
-        public Rectangle rect;
+        public Rectangle renderableRect;
+        public Rectangle collider;
 
-        public EntityCreated(Entity id, EntityType type, Rectangle rect)
+        public EntityCreated(Entity id, EntityType type, Rectangle renderableRect, Rectangle collider)
         {
             this.id = id;
             this.type = type;
-            this.rect = rect;
+            this.renderableRect = renderableRect;
+            this.collider = collider;
         }
     }
 }

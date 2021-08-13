@@ -6,13 +6,13 @@ namespace Helio.Physics
 {
     public struct PhysicMaterial
     {
-        public float restitution;
         public float friction;
+        public float restitution;
 
-        public PhysicMaterial(float restitution, float friction)
+        public PhysicMaterial(float friction, float restitution)
         {
-            this.restitution = restitution;
             this.friction = friction;
+            this.restitution = restitution;
         }
     }
 }

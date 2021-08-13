@@ -25,8 +25,10 @@ namespace Helio
         {
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            IsFixedTimeStep = false;
 
             _window = new Window(title, windowWidth, windowHeight, targetWidth, targetHeight, new GraphicsDeviceManager(this), Window);
+
 
             _gameLogic = gameLogic;
             _humanView = humanView;
