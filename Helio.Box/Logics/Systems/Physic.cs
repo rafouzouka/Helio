@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Helio.Box.Systems
 {
-    public class Physic : PhysicEngine
+    public class Physic : PhysicSystem
     {
         private Vector2 _gravity = new Vector2(0, 0.01f);
 

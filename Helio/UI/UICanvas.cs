@@ -9,21 +9,11 @@ namespace Helio.UI
 {
     public class UICanvas : IScreen
     {
-        private List<UIElement> _elements;
+        //private UIElement _element;
 
         public UICanvas()
         {
-            _elements = new List<UIElement>();
-        }
-
-        public void AddUIElement(UIElement element)
-        {
-            _elements.Add(element);
-        }
-
-        public void RemoveUIElement(UIElement element)
-        {
-            _elements.Remove(element);
+          //  _element = element;
         }
 
         public virtual void Init()
@@ -49,10 +39,10 @@ namespace Helio.UI
 
         public virtual void Draw(GameTime gameTime, Renderer renderer)
         {
-            foreach (UIElement element in _elements)
+/*            foreach (UIElement element in _elements)
             {
                 element.Draw(gameTime, renderer);
-            }
+            }*/
         }
     }
 }

@@ -28,7 +28,6 @@ namespace Helio
 
             _window = new Window(title, windowWidth, windowHeight, targetWidth, targetHeight, new GraphicsDeviceManager(this), Window);
 
-
             _gameLogic = gameLogic;
             _humanView = humanView;
             views = new List<View>();
@@ -53,7 +52,8 @@ namespace Helio
         sealed protected override void LoadContent()
         {
             SpriteBatch spriteBatch = new SpriteBatch(GraphicsDevice);
-            _renderer = new Renderer(spriteBatch);
+
+            _renderer = new Renderer(spriteBatch, GraphicsDevice);
             _window.LoadContent(spriteBatch);
 
             _gameLogic.LoadContent(Content);
@@ -92,9 +92,8 @@ namespace Helio
 
         sealed protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
             _window.Set();
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             _renderer.Begin();
             _humanView.Draw(gameTime, _renderer);

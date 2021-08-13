@@ -19,7 +19,7 @@ namespace Helio.UI
 
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            renderer.DrawText(_spriteFont, _text, new Vector2(50, 50), _color);
+            renderer.DrawText(_spriteFont, _text, new Vector2(50, 50), Color.White, 0.0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.0f); ;
         }
     }
 }

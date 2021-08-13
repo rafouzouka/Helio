@@ -64,7 +64,7 @@ namespace Helio.Core
 
         public void Present()
         {
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone);
             _spriteBatch.Draw(_target, _graphics.GraphicsDevice.PresentationParameters.Bounds, Color.White);
             _spriteBatch.End();
         }

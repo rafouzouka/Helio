@@ -56,6 +56,12 @@
 /processorParam:TextureFormat=Compressed
 /build:fonts/Aria.spritefont
 
+#begin musics/chant.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:musics/chant.wav
+
 #begin player.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -79,6 +85,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:player1.png
+
+#begin sounds/boom.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/boom.wav
+
+#begin sounds/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/jump.wav
 
 #begin tile/backgroundsheet.tsx
 /copy:tile/backgroundsheet.tsx
