@@ -45,7 +45,7 @@ namespace Helio.Physics
             _objects[id].AddImpulse(impulse);
         }
 
-        private void CalcObjetsMotion(GameTime gameTime)
+/*        private void CalcObjetsMotion(GameTime gameTime)
         {
             foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
             {
@@ -65,12 +65,12 @@ namespace Helio.Physics
                     }
                 }
             }
-        }
+        }*/
 
         public void Update(GameTime gameTime)
         {
-            CalcObjetsMotion(gameTime);
-            CheckObjectsCollision();
+/*            CalcObjetsMotion(gameTime);
+            CheckObjectsCollision();*/
         }
 
         public virtual void Init()

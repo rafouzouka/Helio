@@ -18,23 +18,20 @@ namespace Helio.Physics
 
         private IImpulseBehaviour _impulseBehaviour;
         private IForceBehaviour _forceBehaviour;
-        private IMotionCalculation _motionCalculation;
-        private IColliderBehaviour _colliderBehaviour;
 
-        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour, IMotionCalculation motionCalculation, IColliderBehaviour colliderBehaviour)
+        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour)
         {
             _id = id;
 
-            _position = new Vector2(colliderBehaviour.GetCollider().X, colliderBehaviour.GetCollider().Y);
-            _velocity = new Vector2(0, 0);
-            _acceleration = new Vector2(0, 0);
+            //_position = new Vector2(colliderBehaviour.GetCollider().X, colliderBehaviour.GetCollider().Y);
+            _position = Vector2.Zero;
+            _velocity = Vector2.Zero;
+            _acceleration = Vector2.Zero;
 
             _physicMaterial = physicMaterial;
 
             _impulseBehaviour = impulseBehaviour;
             _forceBehaviour = forceBehaviour;
-            _motionCalculation = motionCalculation;
-            _colliderBehaviour = colliderBehaviour;
         }
 
         public void AddForce(Vector2 force)
@@ -55,35 +52,6 @@ namespace Helio.Physics
         public void RemoveImpulse(Vector2 force)
         {
             _impulseBehaviour.RemoveImpulse(force);
-        }
-
-        public void CalcPhysicMotion(GameTime gameTime)
-        {
-            Vector2 force = _forceBehaviour.GetForceResulting();
-            force += _impulseBehaviour.GetForceResulting();
-
-            Vector2 newPosition = _motionCalculation.CalcNewPosition(ref _acceleration, ref _velocity, ref _position, force, _physicMaterial, gameTime);
-            _colliderBehaviour.MoveCollider(newPosition);
-        }
-
-        public void CheckCollision(PhysicObject otherPhysicObject)
-        {
-            Vector2 penetrationCollision = _colliderBehaviour.CheckCollision(otherPhysicObject);
-
-            if (penetrationCollision != Vector2.Zero)
-            {
-                _position.Y -= penetrationCollision.Y;
-                _velocity.Y = 0f;
-
-                _colliderBehaviour.MoveCollider(_position);
-            }
-
-            EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _colliderBehaviour.GetCollider()));
-        }
-
-        public Rectangle GetCollider()
-        {
-            return _colliderBehaviour.GetCollider();
         }
     }
 }
