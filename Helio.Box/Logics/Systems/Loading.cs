@@ -6,7 +6,6 @@ using TiledCS;
 using Helio.Events;
 using Helio.Box.Logics.Events;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace Helio.Box.Logics.Systems

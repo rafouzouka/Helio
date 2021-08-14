@@ -45,15 +45,15 @@ namespace Helio.Physics
             _objects[id].AddImpulse(impulse);
         }
 
-/*        private void CalcObjetsMotion(GameTime gameTime)
+        private void CalcIndependentMotions(GameTime gameTime)
         {
             foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
             {
-                valuePair.Value.CalcPhysicMotion(gameTime);
+                valuePair.Value.CalcIndependentMotion(gameTime);
             }
         }
 
-        private void CheckObjectsCollision()
+        private void CheckCollisions(GameTime gameTime)
         {
             foreach (KeyValuePair<Entity, PhysicObject> collider in _objects)
             {
@@ -61,16 +61,26 @@ namespace Helio.Physics
                 {
                     if (collider.Key.id != otherCollider.Key.id)
                     {
-                        collider.Value.CheckCollision(otherCollider.Value);
+                        collider.Value.CheckCollision(gameTime, otherCollider.Value);
                     }
                 }
             }
-        }*/
+        }
+
+        public void ResolveRealMotions(GameTime gameTime)
+        {
+            foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
+            {
+                valuePair.Value.ResolveRealMotion(gameTime);
+            }
+        }
+
 
         public void Update(GameTime gameTime)
         {
-/*            CalcObjetsMotion(gameTime);
-            CheckObjectsCollision();*/
+            CalcIndependentMotions(gameTime);
+            CheckCollisions(gameTime);
+            ResolveRealMotions(gameTime);
         }
 
         public virtual void Init()

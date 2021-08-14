@@ -24,9 +24,8 @@ namespace Helio.Box.Systems
 
             AddPhysicObject(e.id, new PhysicObject(
                 e.id,
-                new PhysicMaterial(0f, 0f, 0f),
-                new NoImpulseBehaviour(),
-                new NoForceBehaviour()
+                new PhysicMaterial(0f, 0f, 0f, e.colliders[0]),
+                new StaticObject()
             ));
         }
 
@@ -36,9 +35,8 @@ namespace Helio.Box.Systems
 
             AddPhysicObject(e.id, new PhysicObject(
                 e.id,
-                new PhysicMaterial(1.0f, 0f, 0f),
-                new BasicImpulseBehaviour(),
-                new BasicForceBehaviour()
+                new PhysicMaterial(1.0f, 0f, 0f, e.collider),
+                new DynamicObject()
             ));
             
             AddForceToObject(e.id, _gravity);

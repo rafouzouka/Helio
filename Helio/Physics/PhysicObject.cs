@@ -1,57 +1,53 @@
-﻿using Helio.Actors;
-using Helio.Core;
-using Helio.Events;
+﻿using Helio.Core;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
-
 namespace Helio.Physics
 {
     public class PhysicObject
     {
         private Entity _id;
-
-        private Vector2 _position;
-        private Vector2 _velocity;
-        private Vector2 _acceleration;
-
         private PhysicMaterial _physicMaterial;
+        private IPhysicBehaviour _physicBehaviour;
 
-        private IImpulseBehaviour _impulseBehaviour;
-        private IForceBehaviour _forceBehaviour;
-
-        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IImpulseBehaviour impulseBehaviour, IForceBehaviour forceBehaviour)
+        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IPhysicBehaviour physicBehaviour)
         {
             _id = id;
-
-            //_position = new Vector2(colliderBehaviour.GetCollider().X, colliderBehaviour.GetCollider().Y);
-            _position = Vector2.Zero;
-            _velocity = Vector2.Zero;
-            _acceleration = Vector2.Zero;
-
             _physicMaterial = physicMaterial;
-
-            _impulseBehaviour = impulseBehaviour;
-            _forceBehaviour = forceBehaviour;
+            _physicBehaviour = physicBehaviour;
         }
 
         public void AddForce(Vector2 force)
         {
-            _forceBehaviour.AddForce(force);
+            _physicBehaviour.AddForce(force);
         }
 
         public void RemoveForce(Vector2 force)
         {
-            _forceBehaviour.RemoveForce(force);
+            _physicBehaviour.RemoveForce(force);
         }
 
         public void AddImpulse(Vector2 force)
         {
-            _impulseBehaviour.AddImpulse(force);
+            _physicBehaviour.AddImpulse(force);
         }
 
         public void RemoveImpulse(Vector2 force)
         {
-            _impulseBehaviour.RemoveImpulse(force);
+            _physicBehaviour.RemoveImpulse(force);
+        }
+
+        public void CalcIndependentMotion(GameTime gameTime)
+        {
+            _physicBehaviour.CalcIndependentMotion(gameTime);
+        }
+
+        public void CheckCollision(GameTime gameTime, PhysicObject otherObject)
+        {
+            _physicBehaviour.CheckCollision(gameTime, otherObject);
+        }
+
+        public void ResolveRealMotion(GameTime gameTime)
+        {
+            _physicBehaviour.ResolveRealMotion(gameTime);
         }
     }
 }
