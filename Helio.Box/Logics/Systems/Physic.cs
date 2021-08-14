@@ -22,10 +22,9 @@ namespace Helio.Box.Systems
         {
             TerrainLoaded e = (TerrainLoaded)ev;
 
-            AddPhysicObject(e.id, new PhysicObject(
+            AddPhysicObject(e.id, new StaticObject(
                 e.id,
-                new PhysicMaterial(0f, 0f, 0f, e.colliders[0]),
-                new StaticObject()
+                new PhysicMaterial(0f, 0f, 0f, e.colliders[0])
             ));
         }
 
@@ -33,10 +32,9 @@ namespace Helio.Box.Systems
         {
             EntityCreated e = (EntityCreated)ev;
 
-            AddPhysicObject(e.id, new PhysicObject(
+            AddPhysicObject(e.id, new DynamicObject(
                 e.id,
-                new PhysicMaterial(1.0f, 0f, 0f, e.collider),
-                new DynamicObject()
+                new PhysicMaterial(1.0f, 0f, 0f, e.collider)
             ));
             
             AddForceToObject(e.id, _gravity);

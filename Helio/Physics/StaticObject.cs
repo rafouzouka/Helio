@@ -1,37 +1,42 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Helio.Core;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Helio.Physics
 {
-    public class StaticObject : IPhysicBehaviour
+    public class StaticObject : PhysicObject
     {
-        public void AddForce(Vector2 force)
+        public StaticObject(Entity id, PhysicMaterial physicMaterial) : base(id, physicMaterial)
         {
         }
 
-        public void AddImpulse(Vector2 impulse)
+        public override void AddForce(Vector2 force)
         {
         }
 
-        public void CalcIndependentMotion(GameTime gameTime)
+        public override void AddImpulse(Vector2 force)
         {
         }
 
-        public void CheckCollision(GameTime gameTime, PhysicObject otherObject)
+        public override void CalcIndependentMotion(GameTime gameTime)
         {
         }
 
-        public void RemoveForce(Vector2 force)
+        public override void CheckCollision(GameTime gameTime, PhysicObject otherObject)
         {
         }
 
-        public void RemoveImpulse(Vector2 impulse)
+        public override void RemoveForce(Vector2 force)
         {
         }
 
-        public void ResolveRealMotion(GameTime gameTime)
+        public override void RemoveImpulse(Vector2 force)
+        {
+        }
+
+        public override void ResolveRealMotion(GameTime gameTime)
         {
         }
     }

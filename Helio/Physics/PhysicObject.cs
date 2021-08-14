@@ -2,52 +2,29 @@
 using Microsoft.Xna.Framework;
 namespace Helio.Physics
 {
-    public class PhysicObject
+    public abstract class PhysicObject
     {
-        private Entity _id;
-        private PhysicMaterial _physicMaterial;
-        private IPhysicBehaviour _physicBehaviour;
+        public Entity _id;
+        public PhysicMaterial _physicMaterial;
 
-        public PhysicObject(Entity id, PhysicMaterial physicMaterial, IPhysicBehaviour physicBehaviour)
+        public PhysicObject(Entity id, PhysicMaterial physicMaterial)
         {
             _id = id;
             _physicMaterial = physicMaterial;
-            _physicBehaviour = physicBehaviour;
         }
 
-        public void AddForce(Vector2 force)
-        {
-            _physicBehaviour.AddForce(force);
-        }
+        public abstract void AddForce(Vector2 force);
 
-        public void RemoveForce(Vector2 force)
-        {
-            _physicBehaviour.RemoveForce(force);
-        }
+        public abstract void RemoveForce(Vector2 force);
 
-        public void AddImpulse(Vector2 force)
-        {
-            _physicBehaviour.AddImpulse(force);
-        }
+        public abstract void AddImpulse(Vector2 force);
 
-        public void RemoveImpulse(Vector2 force)
-        {
-            _physicBehaviour.RemoveImpulse(force);
-        }
+        public abstract void RemoveImpulse(Vector2 force);
 
-        public void CalcIndependentMotion(GameTime gameTime)
-        {
-            _physicBehaviour.CalcIndependentMotion(gameTime);
-        }
+        public abstract void CalcIndependentMotion(GameTime gameTime);
 
-        public void CheckCollision(GameTime gameTime, PhysicObject otherObject)
-        {
-            _physicBehaviour.CheckCollision(gameTime, otherObject);
-        }
+        public abstract void CheckCollision(GameTime gameTime, PhysicObject otherObject);
 
-        public void ResolveRealMotion(GameTime gameTime)
-        {
-            _physicBehaviour.ResolveRealMotion(gameTime);
-        }
+        public abstract void ResolveRealMotion(GameTime gameTime);
     }
 }
