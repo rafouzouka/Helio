@@ -94,7 +94,7 @@
 
 #begin sounds/jump.wav
 /importer:WavImporter
-/processor:SoundEffectProcessor
+/processor:SongProcessor
 /processorParam:Quality=Best
 /build:sounds/jump.wav
 

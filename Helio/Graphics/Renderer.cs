@@ -65,14 +65,14 @@ namespace Helio.Graphics
             DrawLine(new Vector2(rectangle.X, rectangle.Y + rectangle.Height), new Vector2(rectangle.X, rectangle.Y), color);
         }
 
-        public void DrawLine(Vector2 a, Vector2 b, Color color, float thickness = 1.0f)
+        public void DrawLine(Vector2 a, Vector2 b, Color color, float thickness = 0.6f)
         {
             float length = Vector2.Distance(a, b);
             float angle = (float)Math.Atan2(b.Y - a.Y, b.X - a.X);
             DrawLine(a, length, angle, color, thickness);
         }
 
-        public void DrawLine(Vector2 point, float length, float angle, Color color, float thickness = 1f)
+        public void DrawLine(Vector2 point, float length, float angle, Color color, float thickness = 0.5f)
         {
             var scale = new Vector2(length, thickness);
             _spriteBatch.Draw(GetBaseTexture(), point, null, color, angle, Vector2.Zero, scale, SpriteEffects.None, 0);

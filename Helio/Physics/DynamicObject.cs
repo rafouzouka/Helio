@@ -3,6 +3,7 @@ using Helio.Events;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Helio.Physics
@@ -16,7 +17,8 @@ namespace Helio.Physics
         private Vector2 _velocity;
         private Vector2 _acceleration;
 
-        private Vector2 _penetrationMotion;
+        //private Vector2 _penetrationMotion;
+        private Vector2 _collisionMotion;
 
         public DynamicObject(Entity id, PhysicMaterial physicMaterial) : base(id, physicMaterial)
         {
@@ -27,9 +29,10 @@ namespace Helio.Physics
             _position = new Vector2(physicMaterial.collider.X, physicMaterial.collider.Y);
             _velocity = Vector2.Zero;
             _acceleration = Vector2.Zero;
-            
+
             //_independentPosition = new Vector2(physicMaterial.collider.X, physicMaterial.collider.Y);
-            _penetrationMotion = Vector2.Zero;
+            //_penetrationMotion = Vector2.Zero;
+            _collisionMotion = Vector2.Zero;
         }
 
         public override void AddForce(Vector2 force)
@@ -103,21 +106,23 @@ namespace Helio.Physics
                 return;
             }
 
-            _penetrationMotion.Y = intersection.Height;
+            otherObject.AddCollisonForce(_acceleration);
             _velocity.Y = 0;
+            _position.Y -= intersection.Height; 
+
+            _velocity -= _velocity * otherObject._physicMaterial.friction;
         }
 
         public override void ResolveRealMotion(GameTime gameTime)
         {
-            _position -= _penetrationMotion;
-
             _physicMaterial.collider.X = (int)_position.X;
             _physicMaterial.collider.Y = (int)_position.Y;
 
-            _penetrationMotion.X = 0;
-            _penetrationMotion.Y = 0;
-
             EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _physicMaterial.collider));
+        }
+
+        public override void AddCollisonForce(Vector2 force)
+        {
         }
     }
 }

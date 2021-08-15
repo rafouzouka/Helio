@@ -21,6 +21,8 @@ namespace Helio.Physics
 
         public abstract void RemoveImpulse(Vector2 force);
 
+        public abstract void AddCollisonForce(Vector2 force);
+
         public abstract void CalcIndependentMotion(GameTime gameTime);
 
         public abstract void CheckCollision(GameTime gameTime, PhysicObject otherObject);

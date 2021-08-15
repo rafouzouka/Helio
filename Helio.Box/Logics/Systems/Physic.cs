@@ -1,6 +1,8 @@
 ﻿using Helio.Box.Logics.Events;
 using Helio.Box.Views.Events;
+using Helio.Core;
 using Helio.Events;
+using Helio.Graphics;
 using Helio.Physics;
 using Microsoft.Xna.Framework;
 using System.Diagnostics;
@@ -22,10 +24,13 @@ namespace Helio.Box.Systems
         {
             TerrainLoaded e = (TerrainLoaded)ev;
 
-            AddPhysicObject(e.id, new StaticObject(
-                e.id,
-                new PhysicMaterial(0f, 0f, 0f, e.colliders[0])
-            ));
+            foreach ((Entity, Tile, Rectangle) tile in e.map)
+            {
+                AddPhysicObject(tile.Item1, new StaticObject(
+                    tile.Item1,
+                    new PhysicMaterial(0.0f, 0f, 0f, tile.Item3)
+                ));
+            }
         }
 
         public void CreatePhysicObject(Event ev)

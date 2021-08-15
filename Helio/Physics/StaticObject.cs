@@ -12,6 +12,10 @@ namespace Helio.Physics
         {
         }
 
+        public override void AddCollisonForce(Vector2 force)
+        {
+        }
+
         public override void AddForce(Vector2 force)
         {
         }

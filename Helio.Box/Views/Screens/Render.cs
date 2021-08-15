@@ -44,13 +44,13 @@ namespace Helio.Box.Systems
         {
             TerrainLoaded e = (TerrainLoaded)ev;
 
-            List<Tile> map = new List<Tile>();
-            for (int i = 0; i < e.tiles.Length; i++)
+            List<Tile> tiles = new List<Tile>();
+            foreach ((Entity, Tile, Rectangle) tile in e.map)
             {
-                map.Add(new Tile(e.tiles[i] - 1, i % e.width, i / e.width));
+                tiles.Add(tile.Item2);
+                _entityCollidersDebug.Add(tile.Item1, tile.Item3);
             }
-            AddRenderableItem(e.id, new TileMap(_tileSet, 8, 8, map));
-            _entityCollidersDebug.Add(e.id, e.colliders[0]);
+            AddRenderableItem(e.terrain, new TileMap(_tileSet, 8, 8, tiles));
         }
 
         public void EntityCreated(Event ev)

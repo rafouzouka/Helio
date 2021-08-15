@@ -1,6 +1,7 @@
 ﻿using Helio.Actors;
 using Helio.Core;
 using Helio.Events;
+using Helio.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
@@ -8,19 +9,18 @@ namespace Helio.Box.Logics.Events
 {
     public class TerrainLoaded : Event
     {
-        public Entity id;
-        public Rectangle renderableRect;
-        public int width;
-        public int[] tiles;
-        public List<Rectangle> colliders;
+        public Entity terrain;
 
-        public TerrainLoaded(Entity id, int width, int[] tiles, Rectangle renderableRect, List<Rectangle> colliders)
+        public int width;
+        public Rectangle renderableRect;
+        public List<(Entity, Tile, Rectangle)> map;
+
+        public TerrainLoaded(Entity terrain, int width, Rectangle renderableRect, List<(Entity, Tile, Rectangle)> map)
         {
-            this.id = id;
-            this.renderableRect = renderableRect;
+            this.terrain = terrain;
             this.width = width;
-            this.tiles = tiles;
-            this.colliders = colliders;
+            this.renderableRect = renderableRect;
+            this.map = map;
         }
     }
 }

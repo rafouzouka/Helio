@@ -1,8 +1,10 @@
 ﻿using Helio.Audio;
+using Helio.Box.Views.Events;
 using Helio.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace Helio.Box.Systems
 {
@@ -12,17 +14,23 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
-
+            //EventManager.Instance.AddListener(RequestPlayerMove, typeof(RequestPlayerMove));
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-            _chant = contentManager.Load<Song>("musics/chant");
+            _chant = contentManager.Load<Song>("sounds/jump");
         }
 
-        public void RequestPlayerJump(Event ev)
+        public void RequestPlayerMove(Event ev)
         {
-            PlayMusic(_chant);
+            RequestPlayerMove e = (RequestPlayerMove)ev;
+
+            if (e.movementType == PlayerMovementType.Jump)
+            {
+                Debug.WriteLine("JUMP PRESSED");
+                PlayMusic(_chant);
+            }
         }
     }
 }

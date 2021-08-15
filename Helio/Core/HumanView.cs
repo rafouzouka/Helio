@@ -31,16 +31,19 @@ namespace Helio.Core
 
         public override void Init()
         {
+            base.Init();
             _screenManager.Init();
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
+            base.LoadContent(contentManager);
             _screenManager.LoadContent(contentManager);
         }
 
         public override void Start()
         {
+            base.Start();
             _screenManager.Start();
         }
 
