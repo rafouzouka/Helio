@@ -55,49 +55,33 @@ namespace Helio.Physics
 
         private void CheckCollisions(GameTime gameTime)
         {
-            Queue<PhysicObject> physicObjects = new Queue<PhysicObject>();
             foreach (KeyValuePair<Entity, PhysicObject> collider in _objects)
-            {
-                physicObjects.Enqueue(collider.Value);
-            }
-
-/*            for (int i = 0; i < physicObjects.Count; i++)
-            {
-                PhysicObject obj = physicObjects.Dequeue();
-
-
-
-            }*/
-
-
-            /*foreach (KeyValuePair<Entity, PhysicObject> collider in _objects)
             {
                 foreach (KeyValuePair<Entity, PhysicObject> otherCollider in _objects)
                 {
                     if (collider.Key.id != otherCollider.Key.id)
                     {
-                        collider.Value.CheckCollision(gameTime, otherCollider.Value);
+                        collider.Value.CheckCollisionX(gameTime, otherCollider.Value);
                     }
                 }
-            }*/
+            }
 
-
-        }
-
-        public void ResolveRealMotions(GameTime gameTime)
-        {
-/*            foreach (KeyValuePair<Entity, PhysicObject> valuePair in _objects)
+            foreach (KeyValuePair<Entity, PhysicObject> collider in _objects)
             {
-                valuePair.Value.ResolveRealMotion(gameTime);
-            }*/
-        }
-
+                foreach (KeyValuePair<Entity, PhysicObject> otherCollider in _objects)
+                {
+                    if (collider.Key.id != otherCollider.Key.id)
+                    {
+                        collider.Value.CheckCollisionY(gameTime, otherCollider.Value);
+                    }
+                }
+            }
+        }   
 
         public void Update(GameTime gameTime)
         {
             CalcIndependentMotions(gameTime);
             CheckCollisions(gameTime);
-            ResolveRealMotions(gameTime);
         }
 
         public virtual void Init()

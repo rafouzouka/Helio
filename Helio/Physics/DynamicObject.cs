@@ -25,13 +25,10 @@ namespace Helio.Physics
             _forces = new List<Vector2>();
             _impulses = new List<Vector2>();
 
-            
             _position = new Vector2(physicMaterial.collider.X, physicMaterial.collider.Y);
             _velocity = Vector2.Zero;
             _acceleration = Vector2.Zero;
 
-            //_independentPosition = new Vector2(physicMaterial.collider.X, physicMaterial.collider.Y);
-            //_penetrationMotion = Vector2.Zero;
             _collisionMotion = Vector2.Zero;
         }
 
@@ -86,43 +83,55 @@ namespace Helio.Physics
             {
                 return;
             }
-            
+
             Vector2 force = GetForceResulting();
             force += GetImpulseResulting();
 
             _acceleration = force / _physicMaterial.mass;
             _velocity += _acceleration * (float)gameTime.ElapsedGameTime.TotalSeconds;
             _position += _velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            _physicMaterial.collider.X = (int)_position.X;
-            _physicMaterial.collider.Y = (int)_position.Y;
         }
 
-        public override void CheckCollision(GameTime gameTime, PhysicObject otherObject)
+        public override void CheckCollisionX(GameTime gameTime, PhysicObject physicObject)
         {
-            Rectangle intersection = Rectangle.Intersect(_physicMaterial.collider, otherObject._physicMaterial.collider);
-            if (intersection == Rectangle.Empty)
+            _physicMaterial.collider.X = (int)_position.X;
+
+            Rectangle intersection = Rectangle.Intersect(_physicMaterial.collider, physicObject._physicMaterial.collider);
+            if (intersection != Rectangle.Empty)
             {
-                return;
+                if (_velocity.X > 0f)
+                {
+                    _position.X -= intersection.Width;
+                }
+                if (_velocity.X < 0f)
+                {
+                    _position.X += intersection.Width;
+                }
+                _velocity.X = 0;
+               _physicMaterial.collider.X = (int)_position.X;
+            }
+        }
+
+        public override void CheckCollisionY(GameTime gameTime, PhysicObject physicObject)
+        {
+            _physicMaterial.collider.Y = (int)_position.Y;
+
+            Rectangle intersection = Rectangle.Intersect(_physicMaterial.collider, physicObject._physicMaterial.collider);
+            if (intersection != Rectangle.Empty)
+            {
+                if (_velocity.Y > 0f)
+                {
+                    _position.Y -= intersection.Height;
+                }
+                if (_velocity.Y < 0f)
+                {
+                    _position.Y += intersection.Height;
+                }
+                _velocity.Y = 0;
+                _physicMaterial.collider.Y = (int)_position.Y;
             }
 
-            otherObject.AddCollisonForce(_acceleration);
-            _velocity.Y = 0;
-            _position.Y -= intersection.Height; 
-
-            _velocity -= _velocity * otherObject._physicMaterial.friction;
-        }
-
-        public override void ResolveRealMotion(GameTime gameTime)
-        {
-            _physicMaterial.collider.X = (int)_position.X;
-            _physicMaterial.collider.Y = (int)_position.Y;
-
             EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _physicMaterial.collider));
-        }
-
-        public override void AddCollisonForce(Vector2 force)
-        {
         }
     }
 }

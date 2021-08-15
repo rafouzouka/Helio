@@ -37,13 +37,15 @@ namespace Helio.Box.Logics.Systems
 
             for (int i = 0; i < mapLayer.data.Length; i++)
             {
-                if (mapLayer.data[i] == 0)
+                int tileId = mapLayer.data[i] - 1;
+                if (tileId < 0)
                 {
                     continue;
                 }
+                //if (tileId == 0 || tileId == 1 || tileId == 2)
 
                 Entity tileEntity = EntityCreator.Create();
-                Tile newTile = new Tile(mapLayer.data[i] - 1, i % mapLayer.width, i / mapLayer.width);
+                Tile newTile = new Tile(tileId, i % mapLayer.width, i / mapLayer.width);
                 Rectangle tileCollider = new Rectangle(newTile.x * 16, newTile.y * 16, 16, 16);
                 Debug.WriteLine($"tileCollider: x: {tileCollider.X}, y: {tileCollider.Y}");
                 map.Add((tileEntity, newTile, tileCollider));

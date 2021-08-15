@@ -1,18 +1,11 @@
 ﻿using Helio.Core;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Helio.Physics
 {
     public class StaticObject : PhysicObject
     {
         public StaticObject(Entity id, PhysicMaterial physicMaterial) : base(id, physicMaterial)
-        {
-        }
-
-        public override void AddCollisonForce(Vector2 force)
         {
         }
 
@@ -28,7 +21,11 @@ namespace Helio.Physics
         {
         }
 
-        public override void CheckCollision(GameTime gameTime, PhysicObject otherObject)
+        public override void CheckCollisionX(GameTime gameTime, PhysicObject physicObject)
+        {
+        }
+
+        public override void CheckCollisionY(GameTime gameTime, PhysicObject physicObject)
         {
         }
 
@@ -37,10 +34,6 @@ namespace Helio.Physics
         }
 
         public override void RemoveImpulse(Vector2 force)
-        {
-        }
-
-        public override void ResolveRealMotion(GameTime gameTime)
         {
         }
     }

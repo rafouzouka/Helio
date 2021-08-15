@@ -1,5 +1,7 @@
 ﻿using Helio.Core;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+
 namespace Helio.Physics
 {
     public abstract class PhysicObject
@@ -21,12 +23,10 @@ namespace Helio.Physics
 
         public abstract void RemoveImpulse(Vector2 force);
 
-        public abstract void AddCollisonForce(Vector2 force);
-
         public abstract void CalcIndependentMotion(GameTime gameTime);
 
-        public abstract void CheckCollision(GameTime gameTime, PhysicObject otherObject);
+        public abstract void CheckCollisionX(GameTime gameTime, PhysicObject physicObject);
 
-        public abstract void ResolveRealMotion(GameTime gameTime);
+        public abstract void CheckCollisionY(GameTime gameTime, PhysicObject physicObject);
     }
 }
