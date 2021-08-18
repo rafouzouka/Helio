@@ -4,6 +4,7 @@ using Helio.Core;
 using Helio.Events;
 using Helio.Graphics;
 using Helio.Physics;
+using Helio.Physics.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,18 +20,19 @@ namespace Helio.Box.Systems
         private Texture2D _enemyTexture;
 
         private Texture2D _tileSet;
-        private Dictionary<Entity, Rectangle> _entityCollidersDebug;
+        private Dictionary<Entity, (Rectangle, Color)> _entityCollidersDebug;
 
         public Render() : base()
         {
-            _entityCollidersDebug = new Dictionary<Entity, Rectangle>();
+            _entityCollidersDebug = new Dictionary<Entity, (Rectangle, Color)>();
         }
 
         public override void Init()
         {
             EventManager.Instance.AddListener(EntityCreated, typeof(EntityCreated));
             EventManager.Instance.AddListener(EntityPhysicMoved, typeof(EntityPhysicMoved));
-            EventManager.Instance.AddListener(TerrainLoaded, typeof(TerrainLoaded));
+            EventManager.Instance.AddListener(LevelLoaded, typeof(LevelLoaded));
+            EventManager.Instance.AddListener(EntityCollided, typeof(EntityCollided));
         }
 
         public override void LoadContent(ContentManager contentManager)
@@ -40,24 +42,36 @@ namespace Helio.Box.Systems
             _enemyTexture = contentManager.Load<Texture2D>("enemy1");
         }
 
-        public void TerrainLoaded(Event ev)
+        public void EntityCollided(Event ev)
         {
-            TerrainLoaded e = (TerrainLoaded)ev;
+            EntityCollided e = (EntityCollided)ev;
+
+            _entityCollidersDebug[e.a] = (_entityCollidersDebug[e.a].Item1, Color.Red);
+            _entityCollidersDebug[e.b] = (_entityCollidersDebug[e.b].Item1, Color.Red);
+        }
+
+        public void LevelLoaded(Event ev)
+        {
+            LevelLoaded e = (LevelLoaded)ev;
 
             List<Tile> tiles = new List<Tile>();
-            foreach ((Entity, Tile, Rectangle) tile in e.map)
+            foreach (KeyValuePair<Entity, Tile> tile in e.tiles)
             {
-                tiles.Add(tile.Item2);
-                _entityCollidersDebug.Add(tile.Item1, tile.Item3);
+                tiles.Add(tile.Value);
             }
             AddRenderableItem(e.terrain, new TileMap(_tileSet, 8, 8, tiles));
+
+            foreach (KeyValuePair<Entity, Rectangle> tile in e.tileColliders)
+            {
+                _entityCollidersDebug.Add(tile.Key, (tile.Value, Color.Turquoise));
+            }
         }
 
         public void EntityCreated(Event ev)
         {
             EntityCreated e = (EntityCreated)ev;
 
-            _entityCollidersDebug.Add(e.id, e.collider);
+            _entityCollidersDebug.Add(e.id, (e.collider, Color.Turquoise));
 
             switch (e.type)
             {
@@ -81,14 +95,14 @@ namespace Helio.Box.Systems
             EntityPhysicMoved e = (EntityPhysicMoved)ev;
 
             MoveRenderableItem(e.id, new Vector2(e.collider.X, e.collider.Y));
-            _entityCollidersDebug[e.id] = e.collider;
+            _entityCollidersDebug[e.id] = (e.collider, Color.Turquoise);
         }
 
         public void DebugDraw(GameTime gameTime, Renderer renderer)
         {
-            foreach (KeyValuePair<Entity, Rectangle> keyValue in _entityCollidersDebug)
+            foreach (KeyValuePair<Entity, (Rectangle, Color)> keyValue in _entityCollidersDebug)
             {
-                renderer.DrawRect(keyValue.Value, Color.Turquoise);
+                renderer.DrawRect(keyValue.Value.Item1, keyValue.Value.Item2);
             }
         }
     }

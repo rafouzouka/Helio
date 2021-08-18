@@ -5,6 +5,7 @@ using Helio.Events;
 using Helio.Graphics;
 using Helio.Physics;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Helio.Box.Systems
@@ -16,19 +17,19 @@ namespace Helio.Box.Systems
         public override void Init()
         {
             EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
-            EventManager.Instance.AddListener(TerrainLoaded, typeof(TerrainLoaded));
+            EventManager.Instance.AddListener(LevelLoaded, typeof(LevelLoaded));
             EventManager.Instance.AddListener(RequestPlayerMove, typeof(RequestPlayerMove));
         }
 
-        public void TerrainLoaded(Event ev)
+        public void LevelLoaded(Event ev)
         {
-            TerrainLoaded e = (TerrainLoaded)ev;
+            LevelLoaded e = (LevelLoaded)ev;
 
-            foreach ((Entity, Tile, Rectangle) tile in e.map)
+            foreach (KeyValuePair<Entity, Rectangle> tile in e.tileColliders)
             {
-                AddPhysicObject(tile.Item1, new StaticObject(
-                    tile.Item1,
-                    new PhysicMaterial(0.0f, 0f, 0f, tile.Item3)
+                AddPhysicObject(tile.Key, new StaticObject(
+                    tile.Key,
+                    new PhysicMaterial(0.0f, 0f, 0f, tile.Value)
                 ));
             }
         }

@@ -1,11 +1,12 @@
 ﻿using Helio.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace Helio.UI
 {
     public interface UIElement : IRenderable
     {
+        Vector2 SetConstraints(Constraints constraints);
+
+        void SetPosition(Vector2 position);
     }
 }

@@ -26,45 +26,51 @@ namespace Helio.Box.Logics.Systems
         {
         }
 
-        private void LoadTerrain()
+
+        private void LoadLevel()
         {
             Entity terrain = EntityCreator.Create();
             TiledMap tiledMap = new TiledMap("Content/tile/testmap.tmx");
             Rectangle renderableRect = new Rectangle(0, 16 * 16, 26 * 16, 4 * 16);
+            Dictionary<Entity, Tile> tiles = new Dictionary<Entity, Tile>();
+            Dictionary<Entity, Rectangle> tileColliders = new Dictionary<Entity, Rectangle>();
 
-            TiledLayer mapLayer = tiledMap.Layers[0];
-            List<(Entity, Tile, Rectangle)> map = new List<(Entity, Tile, Rectangle)>();
-
-            for (int i = 0; i < mapLayer.data.Length; i++)
+            foreach (TiledLayer layer in tiledMap.Layers)
             {
-                int tileId = mapLayer.data[i] - 1;
-                if (tileId < 0)
+                if (layer.name == "Background")
                 {
-                    continue;
-                }
-                //if (tileId == 0 || tileId == 1 || tileId == 2)
+                    for (int i = 0; i < layer.data.Length; i++)
+                    {
+                        int tileId = layer.data[i] - 1;
 
-                Entity tileEntity = EntityCreator.Create();
-                Tile newTile = new Tile(tileId, i % mapLayer.width, i / mapLayer.width);
-                Rectangle tileCollider = new Rectangle(newTile.x * 16, newTile.y * 16, 16, 16);
-                Debug.WriteLine($"tileCollider: x: {tileCollider.X}, y: {tileCollider.Y}");
-                map.Add((tileEntity, newTile, tileCollider));
+                        Entity tileEntity = EntityCreator.Create();
+                        Tile newTile = new Tile(tileId, i % layer.width, i / layer.width);
+                        tiles.Add(tileEntity, newTile);
+                    }
+                }
+                if (layer.name == "Walls")
+                {
+                    for (int i = 0; i < layer.data.Length; i++)
+                    {
+                        int tileId = layer.data[i] - 1;
+
+                        Entity tileEntity = EntityCreator.Create();
+                        Tile newTile = new Tile(tileId, i % layer.width, i / layer.width);
+                        tiles.Add(tileEntity, newTile);
+                    }
+                }
             }
-     
-            EventManager.Instance.QueueEvent(new TerrainLoaded(terrain, tiledMap.Layers[0].width, renderableRect, map));
+
+            EventManager.Instance.QueueEvent(new LevelLoaded(terrain, tiledMap.Layers[0].width, renderableRect, tiles, tileColliders));
         }
 
         public void LoadContent(ContentManager contentManager)
         {
-            LoadTerrain();
+            LoadLevel();
 
             Entity player = EntityCreator.Create();
             Rectangle PlayerRect = new Rectangle(40, 50, 16, 32);
             EventManager.Instance.QueueEvent(new EntityCreated(player, EntityType.Player, PlayerRect, PlayerRect));
-
-            /*Entity enemy = EntityCreator.Create();
-            Rectangle enemyRect = new Rectangle(100, 50, 16, 32);
-            EventManager.Instance.QueueEvent(new EntityCreated(enemy, EntityType.Enemy, enemyRect, enemyRect));*/
         }
 
         public void Start()

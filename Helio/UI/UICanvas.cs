@@ -8,11 +8,11 @@ namespace Helio.UI
 {
     public class UICanvas : IScreen
     {
-        //private UIElement _element;
+        private UIElement _child;
 
-        public UICanvas()
+        public void SetUIElement(UIElement element)
         {
-          //  _element = element;
+            _child = element;
         }
 
         public virtual void Init()
@@ -30,18 +30,17 @@ namespace Helio.UI
 
         public virtual void Start()
         {
+            _child.SetConstraints(new Constraints(1280, 1280, 720, 720));
+            _child.SetPosition(Vector2.Zero);
         }
 
         public virtual void Update(GameTime gameTime)
         {
         }
 
-        public virtual void Draw(GameTime gameTime, Renderer renderer)
+        public void Draw(GameTime gameTime, Renderer renderer)
         {
-/*            foreach (UIElement element in _elements)
-            {
-                element.Draw(gameTime, renderer);
-            }*/
+            _child.Draw(gameTime, renderer);
         }
     }
 }

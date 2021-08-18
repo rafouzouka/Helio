@@ -1,5 +1,6 @@
 ﻿using Helio.Core;
 using Helio.Events;
+using Helio.Physics.Events;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -109,6 +110,7 @@ namespace Helio.Physics
                 }
                 _velocity.X = 0;
                _physicMaterial.collider.X = (int)_position.X;
+                EventManager.Instance.QueueEvent(new EntityCollided(_id, physicObject._id));
             }
         }
 
@@ -129,8 +131,8 @@ namespace Helio.Physics
                 }
                 _velocity.Y = 0;
                 _physicMaterial.collider.Y = (int)_position.Y;
+                EventManager.Instance.QueueEvent(new EntityCollided(_id, physicObject._id));
             }
-
             EventManager.Instance.QueueEvent(new EntityPhysicMoved(_id, _physicMaterial.collider));
         }
     }

@@ -94,7 +94,7 @@ namespace Helio
         sealed protected override void Draw(GameTime gameTime)
         {
             _window.Set();
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             _renderer.Begin();
             _humanView.Draw(gameTime, _renderer);

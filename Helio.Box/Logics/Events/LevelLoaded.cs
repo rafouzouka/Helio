@@ -7,20 +7,22 @@ using System.Collections.Generic;
 
 namespace Helio.Box.Logics.Events
 {
-    public class TerrainLoaded : Event
+    public class LevelLoaded : Event
     {
         public Entity terrain;
 
         public int width;
         public Rectangle renderableRect;
-        public List<(Entity, Tile, Rectangle)> map;
+        public Dictionary<Entity, Tile> tiles;
+        public Dictionary<Entity, Rectangle> tileColliders;
 
-        public TerrainLoaded(Entity terrain, int width, Rectangle renderableRect, List<(Entity, Tile, Rectangle)> map)
+        public LevelLoaded(Entity terrain, int width, Rectangle renderableRect, Dictionary<Entity, Tile> tiles, Dictionary<Entity, Rectangle> tileColliders)
         {
             this.terrain = terrain;
             this.width = width;
             this.renderableRect = renderableRect;
-            this.map = map;
+            this.tiles = tiles;
+            this.tileColliders = tileColliders;
         }
     }
 }

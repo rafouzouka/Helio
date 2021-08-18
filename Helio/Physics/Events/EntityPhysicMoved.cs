@@ -1,5 +1,4 @@
-﻿using Helio.Actors;
-using Helio.Core;
+﻿using Helio.Core;
 using Helio.Events;
 using Microsoft.Xna.Framework;
 

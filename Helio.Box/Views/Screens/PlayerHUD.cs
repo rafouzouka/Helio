@@ -18,11 +18,21 @@ namespace Helio.Box.Views.Screens
         public override void LoadContent(ContentManager contentManager)
         {
             _font = contentManager.Load<SpriteFont>("fonts/Aria");
-            //AddUIElement(new Text(aria, "Salut les gens", Color.Red));
-        }
 
-        public override void Draw(GameTime gameTime, Renderer renderer)
-        {
+            SetUIElement(
+                new Center(
+                    new Container(
+                        color: Color.Red,
+                        width: 100f,
+                        height: 100f,
+                        child: new Text(
+                            _font,
+                            "Salut les gens",
+                            Color.Green
+                        )
+                    )
+                )
+            );
         }
 
         public void DebugDraw(GameTime gameTime, Renderer renderer)
