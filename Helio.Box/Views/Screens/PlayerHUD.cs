@@ -22,29 +22,16 @@ namespace Helio.Box.Views.Screens
             _font = contentManager.Load<SpriteFont>("fonts/Aria");
 
             SetUIElement(
-                new Column(
-                    mainAxisAlignement: MainAxisAlignement.End,
-                    crossAxisAlignement: CrossAxisAlignement.Center,
-                    childs: new List<UIElement> {
-                        new Container(Color.AliceBlue, 100, 100),
-                        new Container(Color.Chocolate, 200, 150),
+                new Row(new List<UIElement>{
+                        new Container(Color.Orange, width: 1280/2),
+                        new Column(new List<UIElement> {
+                            new Container(Color.CadetBlue, 100, 100),
+                            new TextButton(Color.Green, OnButtonPressed)
+                        }),
                     }
                 )
             );
         }
-
-        /*
-         * new Row(
-                    mainAxisAlignement: MainAxisAlignement.Center,
-                    crossAxisAlignement: CrossAxisAlignement.Start,
-                    childs: new List<UIElement> {
-                        new Container(Color.Aquamarine, 100, 100),
-                        new Container(Color.Orange, 200, 200),
-                        new Container(Color.Pink, 400, 400),
-                        new TextButton(Color.Green, onPressed: OnButtonPressed)
-                    }
-                )
-         */
 
         private void OnButtonPressed()
         {

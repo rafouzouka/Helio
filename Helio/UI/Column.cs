@@ -1,8 +1,10 @@
-﻿using Helio.Graphics;
+﻿using Helio.Core;
+using Helio.Graphics;
 using Helio.Inputs;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Helio.UI
@@ -40,7 +42,9 @@ namespace Helio.UI
         {
             foreach (UIElement child in _childs)
             {
-                Vector2 size = child.SetConstraints(Constraints.NoConstraints());
+                Vector2 size = child.SetConstraints(new Constraints(0f, constraints.maxWidth, 0f, constraints.maxHeight));
+
+                Debug.WriteLine($"size: {size.X} {size.Y}");
 
                 if (size.X > _widestChildSize)
                 {
@@ -52,7 +56,9 @@ namespace Helio.UI
             }
 
             _currentSize.Y = constraints.maxHeight;
-            _currentSize.X = _widestChildSize;
+            _widestChildSize = Utils.Clamp(_widestChildSize, constraints.minWidth, constraints.maxWidth);
+            _currentSize.X = _widestChildSize; 
+
             return _currentSize;
         }
 

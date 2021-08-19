@@ -1,8 +1,10 @@
-﻿using Helio.Graphics;
+﻿using Helio.Core;
+using Helio.Graphics;
 using Helio.Inputs;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Helio.UI
 {
@@ -37,7 +39,7 @@ namespace Helio.UI
         {
             foreach (UIElement child in _childs)
             {
-                Vector2 size = child.SetConstraints(Constraints.NoConstraints());
+                Vector2 size = child.SetConstraints(new Constraints(0f, constraints.maxWidth, 0f, constraints.maxHeight));
 
                 if (size.Y > _highestChildSize)
                 {
@@ -49,7 +51,9 @@ namespace Helio.UI
             }
 
             _currentSize.X = constraints.maxWidth;
+            _highestChildSize = Utils.Clamp(_highestChildSize, constraints.minHeight, constraints.maxHeight);
             _currentSize.Y = _highestChildSize;
+
 
             return _currentSize;
         }
@@ -110,7 +114,7 @@ namespace Helio.UI
             {
                 child.Draw(gameTime, renderer);
             }
-            renderer.DrawRect(new Rectangle(_currentPosition.ToPoint(), _currentSize.ToPoint()), Color.Orange);
+            renderer.DrawRect(new Rectangle(_currentPosition.ToPoint(), _currentSize.ToPoint()), Color.Pink);
         }
 
         public bool OnInput(InputEvent input)
