@@ -25,7 +25,7 @@ namespace Helio.UI
 
         public virtual bool OnInput(InputEvent input)
         {
-            return true;
+            return _child.OnInput(input);
         }
 
         public virtual void Start()

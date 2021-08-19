@@ -17,5 +17,17 @@ namespace Helio.Core
             }
             return value;
         }
+
+        public static T Max<T>(T value1, T value2) where T : IComparable
+        {
+            if (value1.CompareTo(value2) > 0)
+            {
+                return value1;
+            }
+            else
+            {
+                return value2;
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Helio.Graphics;
+using Helio.Inputs;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace Helio.UI
 {
@@ -46,6 +47,11 @@ namespace Helio.UI
         public void Draw(GameTime gameTime, Renderer renderer)
         {
             _child.Draw(gameTime, renderer);
+        }
+
+        public bool OnInput(InputEvent input)
+        {
+            return _child.OnInput(input);
         }
     }
 }

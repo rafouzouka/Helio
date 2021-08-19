@@ -1,6 +1,8 @@
 ﻿using Helio.Graphics;
+using Helio.Inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Helio.UI
@@ -38,6 +40,11 @@ namespace Helio.UI
         public void Draw(GameTime gameTime, Renderer renderer)
         {
             renderer.DrawText(_spriteFont, _text, _position, _color, 0.0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 0.0f); ;
+        }
+
+        public bool OnInput(InputEvent input)
+        {
+            return true;
         }
     }
 }

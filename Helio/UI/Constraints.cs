@@ -20,5 +20,10 @@ namespace Helio.UI
             this.minHeight = minHeight;
             this.maxHeight = maxHeight;
         }
+
+        public static Constraints NoConstraints()
+        {
+            return new Constraints(0, float.PositiveInfinity, 0, float.PositiveInfinity);
+        }
     }
 }

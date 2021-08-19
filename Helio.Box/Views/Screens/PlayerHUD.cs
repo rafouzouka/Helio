@@ -3,6 +3,8 @@ using Helio.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Helio.Box.Views.Screens
 {
@@ -20,19 +22,22 @@ namespace Helio.Box.Views.Screens
             _font = contentManager.Load<SpriteFont>("fonts/Aria");
 
             SetUIElement(
-                new Center(
-                    new Container(
-                        color: Color.Red,
-                        width: 100f,
-                        height: 100f,
-                        child: new Text(
-                            _font,
-                            "Salut les gens",
-                            Color.Green
-                        )
-                    )
+                new Row(
+                    mainAxisAlignement: MainAxisAlignement.Center,
+                    crossAxisAlignement: CrossAxisAlignement.Start,
+                    childs: new List<UIElement> {
+                        new Container(Color.Aquamarine, 100, 100),
+                        new Container(Color.Orange, 200, 200),
+                        new Container(Color.Pink, 400, 400),
+                        new TextButton(Color.Green, onPressed: OnButtonPressed)
+                    }
                 )
             );
+        }
+
+        private void OnButtonPressed()
+        {
+            Debug.WriteLine("The button as been pressed!!");
         }
 
         public void DebugDraw(GameTime gameTime, Renderer renderer)
