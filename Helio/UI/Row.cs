@@ -6,25 +6,6 @@ using System.Collections.Generic;
 
 namespace Helio.UI
 {
-    public enum MainAxisAlignement
-    {
-        SpaceEvenly,
-        SpaceAround,
-        SpaceBetween,
-        Center,
-        Start,
-        End
-    }
-
-    public enum CrossAxisAlignement
-    {
-        Center,
-        Start,
-        End,
-        //Stretch,
-        //BaseLine,
-    }
-
     public class Row : UIElement
     {
         private List<UIElement> _childs;

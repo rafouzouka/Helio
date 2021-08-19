@@ -2,7 +2,6 @@
 using Helio.Graphics;
 using Helio.Inputs;
 using Microsoft.Xna.Framework;
-using System.Diagnostics;
 
 namespace Helio.UI
 {
