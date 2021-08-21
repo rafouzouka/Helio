@@ -17,8 +17,8 @@ namespace Helio
 
         private Logic _gameLogic;
         private HumanView _humanView;
-
         public List<View> views;
+        
         public Input input;
 
         public App(string title, int windowWidth, int windowHeight, int targetWidth, int targetHeight, Logic gameLogic, HumanView humanView)

@@ -11,15 +11,17 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using TiledCS;
 
 namespace Helio.Box.Systems
 {
     public class Render : RenderEngine, IDebugRenderable
     {
         private Texture2D _playerTexture;
-        private Texture2D _enemyTexture;
 
-        private Texture2D _tileSet;
+        private TiledTileset _tileSet;
+        private Texture2D _tileSetImage;
+
         private Dictionary<Entity, (Rectangle, Color)> _entityCollidersDebug;
 
         public Render() : base()
@@ -29,42 +31,52 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
+            EventManager.Instance.AddListener(LevelTilesLoaded, typeof(LevelTilesLoaded));
+            EventManager.Instance.AddListener(MapCollidersLoaded, typeof(MapCollidersLoaded));
+            
             EventManager.Instance.AddListener(EntityCreated, typeof(EntityCreated));
             EventManager.Instance.AddListener(EntityPhysicMoved, typeof(EntityPhysicMoved));
-            EventManager.Instance.AddListener(LevelLoaded, typeof(LevelLoaded));
             EventManager.Instance.AddListener(EntityCollided, typeof(EntityCollided));
         }
 
         public override void LoadContent(ContentManager contentManager)
         {
-            _tileSet = contentManager.Load<Texture2D>("tile/tileset");
-            _playerTexture = contentManager.Load<Texture2D>("player1");
-            _enemyTexture = contentManager.Load<Texture2D>("enemy1");
+            _tileSet = new TiledTileset("Content/tile/backgroundsheet.tsx");
+            _tileSetImage = contentManager.Load<Texture2D>($"tile/{_tileSet.Image.Split(".")[0]}");
+            
+            _playerTexture = contentManager.Load<Texture2D>("sprites/player/player1");
+        }
+
+        public void MapCollidersLoaded(Event ev)
+        {
+            MapCollidersLoaded e = (MapCollidersLoaded)ev;
+
+            foreach (KeyValuePair<Entity, Rectangle> collider in e.colliders)
+            {
+                _entityCollidersDebug.Add(collider.Key, (collider.Value, Color.Turquoise));
+            }
         }
 
         public void EntityCollided(Event ev)
         {
             EntityCollided e = (EntityCollided)ev;
 
-            _entityCollidersDebug[e.a] = (_entityCollidersDebug[e.a].Item1, Color.Red);
-            _entityCollidersDebug[e.b] = (_entityCollidersDebug[e.b].Item1, Color.Red);
+/*            _entityCollidersDebug[e.a] = (_entityCollidersDebug[e.a].Item1, Color.Red);
+            _entityCollidersDebug[e.b] = (_entityCollidersDebug[e.b].Item1, Color.Red);*/
         }
 
-        public void LevelLoaded(Event ev)
+        public void LevelTilesLoaded(Event ev)
         {
-            LevelLoaded e = (LevelLoaded)ev;
-
+            LevelTilesLoaded e = (LevelTilesLoaded)ev;
+            
             List<Tile> tiles = new List<Tile>();
-            foreach (KeyValuePair<Entity, Tile> tile in e.tiles)
-            {
-                tiles.Add(tile.Value);
-            }
-            AddRenderableItem(e.terrain, new TileMap(_tileSet, 8, 8, tiles));
 
-            foreach (KeyValuePair<Entity, Rectangle> tile in e.tileColliders)
+            for (int i = 0; i < e.tiles.Length; i++)
             {
-                _entityCollidersDebug.Add(tile.Key, (tile.Value, Color.Turquoise));
+                tiles.Add(new Tile(e.tiles[i] - 1, i % e.tileMapWidth, i / e.tileMapWidth));
             }
+            
+            AddRenderableItem(e.id, new TileMap(_tileSetImage, _tileSet.Columns, _tileSet.TileCount / _tileSet.Columns, tiles));
         }
 
         public void EntityCreated(Event ev)
@@ -78,11 +90,6 @@ namespace Helio.Box.Systems
                 case EntityType.Player:
                     Sprite sprite = new Sprite(_playerTexture, e.renderableRect, null);
                     AddRenderableItem(e.id, sprite);
-                    break;
-
-                case EntityType.Enemy:
-                    Sprite enemySprite = new Sprite(_enemyTexture, e.renderableRect, null);
-                    AddRenderableItem(e.id, enemySprite);
                     break;
 
                 default:

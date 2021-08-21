@@ -5,7 +5,7 @@ namespace Helio.Box
 {
     public class Game1 : App
     {
-        public Game1() : base("Promethee", 1280, 720, 1280, 720, new GameLogic(), new PlayerView())
+        public Game1() : base("Promethee", 1280, 720, 1280/4, 720/4, new GameLogic(), new PlayerView())
         {
 
         }

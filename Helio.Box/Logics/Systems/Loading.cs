@@ -1,15 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Content;
 
 using Helio.Core;
-using Helio.Actors;
 using TiledCS;
 using Helio.Events;
 using Helio.Box.Logics.Events;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using System.Diagnostics;
-using Helio.Graphics;
 using System;
+using System.Collections.Generic;
+using Helio.Graphics;
 
 namespace Helio.Box.Logics.Systems
 {
@@ -19,58 +18,84 @@ namespace Helio.Box.Logics.Systems
         Block,
         Enemy,
     }
-
+    
     public class Loading : ISystem
     {
         public void Init()
         {
         }
 
+        private void LoadTileMap(TiledLayer tilesLayer)
+        {
+            Entity tilesMapId = EntityCreator.Create();
+            EventManager.Instance.QueueEvent(
+                new LevelTilesLoaded(
+                    id: tilesMapId,
+                    tileMapWidth: tilesLayer.width,
+                    tileMapHeight: tilesLayer.height,
+                    tiles: tilesLayer.data
+                )
+            );
+        }
+
+        private void LoadMapColliders(TiledLayer tilesLayer)
+        {
+            Dictionary<Entity, Rectangle> colliders = new Dictionary<Entity, Rectangle>();
+            
+            foreach(TiledObject obj in tilesLayer.objects)
+            {
+                colliders.Add(EntityCreator.Create(), new Rectangle((int)obj.x, (int)obj.y, (int)obj.width, (int)obj.height));
+            }
+
+            EventManager.Instance.QueueEvent(new MapCollidersLoaded(colliders));
+        }
+
+        private void PlayerSpawn(TiledLayer tilesLayer)
+        {
+            Rectangle renderable = new Rectangle((int)tilesLayer.objects[0].x, (int)tilesLayer.objects[0].y, 24, 36);
+
+            EventManager.Instance.QueueEvent(new EntityCreated(
+                EntityCreator.Create(),
+                EntityType.Player,
+                renderable,
+                renderable
+            ));
+        }
 
         private void LoadLevel()
         {
-            Entity terrain = EntityCreator.Create();
-            TiledMap tiledMap = new TiledMap("Content/tile/testmap.tmx");
-            Rectangle renderableRect = new Rectangle(0, 16 * 16, 26 * 16, 4 * 16);
-            Dictionary<Entity, Tile> tiles = new Dictionary<Entity, Tile>();
-            Dictionary<Entity, Rectangle> tileColliders = new Dictionary<Entity, Rectangle>();
+            TiledMap tiledMap = new TiledMap("Content/tile/Level1b.tmx");
 
             foreach (TiledLayer layer in tiledMap.Layers)
             {
-                if (layer.name == "Background")
+                switch (layer.name)
                 {
-                    for (int i = 0; i < layer.data.Length; i++)
-                    {
-                        int tileId = layer.data[i] - 1;
+                    case "Tiles":
+                        LoadTileMap(layer);
+                        break;
 
-                        Entity tileEntity = EntityCreator.Create();
-                        Tile newTile = new Tile(tileId, i % layer.width, i / layer.width);
-                        tiles.Add(tileEntity, newTile);
-                    }
-                }
-                if (layer.name == "Walls")
-                {
-                    for (int i = 0; i < layer.data.Length; i++)
-                    {
-                        int tileId = layer.data[i] - 1;
+                    case "Colliders":
+                        LoadMapColliders(layer);
+                        break;
 
-                        Entity tileEntity = EntityCreator.Create();
-                        Tile newTile = new Tile(tileId, i % layer.width, i / layer.width);
-                        tiles.Add(tileEntity, newTile);
-                    }
+                    case "PlayerSpawn":
+                        PlayerSpawn(layer);
+                        break;
+
+                    default:
+                        Debug.WriteLine(layer.name);
+                        throw new Exception("Layer must be handled.");
                 }
             }
-
-            EventManager.Instance.QueueEvent(new LevelLoaded(terrain, tiledMap.Layers[0].width, renderableRect, tiles, tileColliders));
         }
 
         public void LoadContent(ContentManager contentManager)
         {
             LoadLevel();
 
-            Entity player = EntityCreator.Create();
-            Rectangle PlayerRect = new Rectangle(40, 50, 16, 32);
-            EventManager.Instance.QueueEvent(new EntityCreated(player, EntityType.Player, PlayerRect, PlayerRect));
+/*            Entity player = EntityCreator.Create();
+            Rectangle PlayerRect = new Rectangle(40, 50, 24, 36);
+            EventManager.Instance.QueueEvent(new EntityCreated(player, EntityType.Player, PlayerRect, PlayerRect));*/
         }
 
         public void Start()

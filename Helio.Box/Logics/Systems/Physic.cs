@@ -16,20 +16,20 @@ namespace Helio.Box.Systems
 
         public override void Init()
         {
+            EventManager.Instance.AddListener(MapCollidersLoaded, typeof(MapCollidersLoaded));
             EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
-            EventManager.Instance.AddListener(LevelLoaded, typeof(LevelLoaded));
             EventManager.Instance.AddListener(RequestPlayerMove, typeof(RequestPlayerMove));
         }
 
-        public void LevelLoaded(Event ev)
+        public void MapCollidersLoaded(Event ev)
         {
-            LevelLoaded e = (LevelLoaded)ev;
+            MapCollidersLoaded e = (MapCollidersLoaded)ev;
 
-            foreach (KeyValuePair<Entity, Rectangle> tile in e.tileColliders)
+            foreach (KeyValuePair<Entity, Rectangle> collider in e.colliders)
             {
-                AddPhysicObject(tile.Key, new StaticObject(
-                    tile.Key,
-                    new PhysicMaterial(0.0f, 0f, 0f, tile.Value)
+                AddPhysicObject(collider.Key, new StaticObject(
+                    collider.Key,
+                    new PhysicMaterial(0f, 0f, 0f, collider.Value)
                 ));
             }
         }
