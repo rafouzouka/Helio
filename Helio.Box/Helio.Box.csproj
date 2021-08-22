@@ -31,4 +31,9 @@
   <ItemGroup>
     <ProjectReference Include="..\Helio\Helio.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\sprites\enemies\" />
+    <Folder Include="Content\sprites\player\" />
+    <Folder Include="Content\tiles\" />
+  </ItemGroup>
 </Project>

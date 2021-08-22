@@ -17,7 +17,7 @@ namespace Helio.Box.Systems
         public override void Init()
         {
             EventManager.Instance.AddListener(MapCollidersLoaded, typeof(MapCollidersLoaded));
-            EventManager.Instance.AddListener(CreatePhysicObject, typeof(EntityCreated));
+            EventManager.Instance.AddListener(EntityCreated, typeof(EntityCreated));
             EventManager.Instance.AddListener(RequestPlayerMove, typeof(RequestPlayerMove));
         }
 
@@ -34,7 +34,7 @@ namespace Helio.Box.Systems
             }
         }
 
-        public void CreatePhysicObject(Event ev)
+        public void EntityCreated(Event ev)
         {
             EntityCreated e = (EntityCreated)ev;
 

@@ -52,7 +52,7 @@ namespace Helio.Box.Logics.Systems
 
         private void PlayerSpawn(TiledLayer tilesLayer)
         {
-            Rectangle renderable = new Rectangle((int)tilesLayer.objects[0].x, (int)tilesLayer.objects[0].y, 24, 36);
+            Rectangle renderable = new Rectangle((int)tilesLayer.objects[0].x, (int)tilesLayer.objects[0].y, 32, 32);
 
             EventManager.Instance.QueueEvent(new EntityCreated(
                 EntityCreator.Create(),
@@ -62,15 +62,34 @@ namespace Helio.Box.Logics.Systems
             ));
         }
 
+        private void EnemiesSpawn(TiledLayer tilesLayer)
+        {
+            foreach (TiledObject enemy in tilesLayer.objects)
+            {
+                Rectangle renderable = new Rectangle((int)enemy.x, (int)enemy.y, 32, 36);
+
+                EventManager.Instance.QueueEvent(new EntityCreated(
+                    EntityCreator.Create(),
+                    EntityType.Enemy,
+                    renderable,
+                    renderable
+                ));
+            }
+        }
+
         private void LoadLevel()
         {
-            TiledMap tiledMap = new TiledMap("Content/tile/Level1b.tmx");
+            TiledMap tiledMap = new TiledMap("Content/tiles/tilemap.tmx");
 
             foreach (TiledLayer layer in tiledMap.Layers)
             {
                 switch (layer.name)
                 {
-                    case "Tiles":
+                    case "Foreground":
+                        LoadTileMap(layer);
+                        break;
+
+                    case "Background":
                         LoadTileMap(layer);
                         break;
 
@@ -78,8 +97,12 @@ namespace Helio.Box.Logics.Systems
                         LoadMapColliders(layer);
                         break;
 
-                    case "PlayerSpawn":
+                    case "Player":
                         PlayerSpawn(layer);
+                        break;
+
+                    case "Enemies":
+                        EnemiesSpawn(layer);
                         break;
 
                     default:

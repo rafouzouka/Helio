@@ -38,7 +38,7 @@
 /processorParam:Quality=Best
 /build:sounds/jump.wav
 
-#begin sprites/player/player1.png
+#begin sprites/player/player.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -48,18 +48,12 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:sprites/player/player1.png
+/build:sprites/player/player.png
 
-#begin tile/backgroundsheet.tsx
-/copy:tile/backgroundsheet.tsx
+#begin tiles/tilemap.tmx
+/copy:tiles/tilemap.tmx
 
-#begin tile/Level1b.tmx
-/copy:tile/Level1b.tmx
-
-#begin tile/testmap.tmx
-/copy:tile/testmap.tmx
-
-#begin tile/tileset.png
+#begin tiles/tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -69,5 +63,8 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:tile/tileset.png
+/build:tiles/tileset.png
+
+#begin tiles/tileset.tsx
+/copy:tiles/tileset.tsx
 

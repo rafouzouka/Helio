@@ -30,7 +30,7 @@ namespace Helio.UI
 
         public virtual void Start()
         {
-            _child.SetConstraints(new Constraints(1280, 1280, 720, 720));
+            _child.SetConstraints(new Constraints(1280/2, 1280/2, 720/2, 720/2));
             _child.SetPosition(Vector2.Zero);
         }
 

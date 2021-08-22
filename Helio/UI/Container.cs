@@ -50,10 +50,10 @@ namespace Helio.UI
 
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            //renderer.DrawRectFill(new Rectangle(_position.ToPoint(), _size.ToPoint()), _color);
+            renderer.DrawRectFill(new Rectangle(_position.ToPoint(), _size.ToPoint()), _color);
             _child?.Draw(gameTime, renderer);
 
-            renderer.DrawRect(new Rectangle(_position.ToPoint(), _size.ToPoint()), _color);
+            //renderer.DrawRect(new Rectangle(_position.ToPoint(), _size.ToPoint()), _color);
         }
 
         public bool OnInput(InputEvent input)

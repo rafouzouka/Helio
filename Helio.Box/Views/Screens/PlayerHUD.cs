@@ -21,16 +21,9 @@ namespace Helio.Box.Views.Screens
         {
             _font = contentManager.Load<SpriteFont>("fonts/Aria");
 
-            SetUIElement(
-                new Row(new List<UIElement>{
-                        new Container(Color.Orange, width: 1280/2),
-                        new Column(new List<UIElement> {
-                            new Container(Color.CadetBlue, 100, 100),
-                            new TextButton(Color.Green, OnButtonPressed)
-                        }),
-                    }
-                )
-            );
+            /*SetUIElement(
+                new Container(Color.Gray, 50, 50)
+            );*/
         }
 
         private void OnButtonPressed()

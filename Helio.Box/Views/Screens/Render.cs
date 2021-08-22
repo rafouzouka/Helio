@@ -18,6 +18,7 @@ namespace Helio.Box.Systems
     public class Render : RenderEngine, IDebugRenderable
     {
         private Texture2D _playerTexture;
+        private Texture2D _enemyTexture;
 
         private TiledTileset _tileSet;
         private Texture2D _tileSetImage;
@@ -41,10 +42,11 @@ namespace Helio.Box.Systems
 
         public override void LoadContent(ContentManager contentManager)
         {
-            _tileSet = new TiledTileset("Content/tile/backgroundsheet.tsx");
-            _tileSetImage = contentManager.Load<Texture2D>($"tile/{_tileSet.Image.Split(".")[0]}");
-            
-            _playerTexture = contentManager.Load<Texture2D>("sprites/player/player1");
+            _tileSet = new TiledTileset("Content/tiles/tileset.tsx");
+            _tileSetImage = contentManager.Load<Texture2D>($"tiles/{_tileSet.Image.Split(".")[0]}");
+
+            _playerTexture = contentManager.Load<Texture2D>("sprites/player/player");
+            //_enemyTexture = contentManager.Load<Texture2D>("sprites/enemies/enemy1");
         }
 
         public void MapCollidersLoaded(Event ev)
@@ -88,8 +90,13 @@ namespace Helio.Box.Systems
             switch (e.type)
             {
                 case EntityType.Player:
-                    Sprite sprite = new Sprite(_playerTexture, e.renderableRect, null);
-                    AddRenderableItem(e.id, sprite);
+                    Sprite player = new Sprite(_playerTexture, e.renderableRect, null);
+                    AddRenderableItem(e.id, player);
+                    break;
+
+                case EntityType.Enemy:
+                    Sprite enemy = new Sprite(_enemyTexture, e.renderableRect, null);
+                    AddRenderableItem(e.id, enemy);
                     break;
 
                 default:
@@ -107,10 +114,10 @@ namespace Helio.Box.Systems
 
         public void DebugDraw(GameTime gameTime, Renderer renderer)
         {
-            foreach (KeyValuePair<Entity, (Rectangle, Color)> keyValue in _entityCollidersDebug)
+        /*    foreach (KeyValuePair<Entity, (Rectangle, Color)> keyValue in _entityCollidersDebug)
             {
                 renderer.DrawRect(keyValue.Value.Item1, keyValue.Value.Item2);
-            }
+            }*/
         }
     }
 }
